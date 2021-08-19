@@ -1,0 +1,44 @@
+
+h1{
+  margin-left: 23px;
+  font-size: 40px;
+}
+
+input,select{
+  font-size: 23px;
+  margin: 23px;
+  width: 330px;
+  height: 30px;
+}
+
+
+
+button{
+  font-size: 22px;
+  padding: 5px;
+}
+
+.submit{
+  display: block;
+  margin-left:50px;
+  
+}
+
+table,td,th{
+  margin: 30px;
+  font-size: 23px;
+  border: 2px solid black;
+  text-align: center;
+  margin: 10px;
+
+}
+
+.remove_button{
+  margin-left: 10px;
+}
+
+.home-buttons{
+  margin:10px 15px;
+}
+
+
