@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import {Link} from "react-router-dom";
-import Display from "./Display";
+
 
 class Home extends Component{
 
@@ -21,11 +21,17 @@ class Home extends Component{
             <div>
                 <h1>Home</h1>
                 <Link to="/poolCreate"><button className="home-buttons">Create A Pool</button></Link>
-                <button type="button" onClick={this.toLogout}>Logout</button>
-                <button type="button" onClick={()=>{
-                    window.location.assign("/process");
+                
+                <button type="button" className="home-buttons" onClick={()=>{
+                    window.location.assign("/displayPosts");
                 }}>Posts</button>
-                <Display />
+                <button type="button" className="home-buttons" onClick={()=>{
+                    window.location.assign("/displayPools")
+                }}>Display Pools</button>
+                 <button type="button" className="home-buttons" onClick={()=>{
+                    window.location.assign("/displayChallenges")
+                }}>Display Challenges</button>
+               <button type="button" className="home-buttons" onClick={this.toLogout}>Logout</button>
             </div>
         )
     }

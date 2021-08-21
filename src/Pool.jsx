@@ -202,8 +202,9 @@ class Pool extends Component{
         <input onChange={this.handleChangeAll} id="max_entries" type="number" placeholder="Max-Entries" /><br />
         <input onChange={this.handleChangeAll} id="no_of_winners" type="number" placeholder="No. of Winners" /><br />
         <input onChange={this.handleChangeAll} id="win_percent" type="number" placeholder="Win Percent" /><br />
-        <input id="winnings" type="number" onChange={this.handleChange} placeholder="Enter Your number" />
-        <button type="button" onClick={this.handleClick}>Add</button>
+        <input id="winnings" type="number" onChange={this.handleChange} placeholder="Enter Winnings" />
+        <button type="button" onClick={this.handleClick}>Add</button><br />
+        <textarea id="rules" onChange={this.handleChangeAll} placeholder="Rules"/><br />
         <button type="submit" className="submit" disabled={this.state.disabled}>Submit</button>
         </form>
         

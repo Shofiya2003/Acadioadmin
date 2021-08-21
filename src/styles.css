@@ -4,7 +4,7 @@ h1{
   font-size: 40px;
 }
 
-input,select{
+input,select,textarea{
   font-size: 23px;
   margin: 23px;
   width: 330px;
@@ -39,6 +39,56 @@ table,td,th{
 
 .home-buttons{
   margin:10px 15px;
+}
+
+.poolContainer{
+  display: flex;
+ 
+}
+
+.poolContainer>*{
+  flex-basis: 25%;
+  flex: 1;
+  border: 2px black solid;
+  margin:10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.postContainer{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.postContainer>*{
+
+  flex: 1 30%;
+  border: 2px black solid;
+  margin:10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+}
+
+.challengeContainer{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card{
+  flex: 1 25%;
+  border:2px solid black;
+  margin: 10px;
+  display: flex;
+  padding-top: 5px;
+  justify-content: center;
+  align-items: center;
+
 }
 
 
