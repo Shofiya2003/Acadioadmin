@@ -1,8 +1,8 @@
 import React,{Component} from "react";
 import {Card,Button} from "react-bootstrap";
-import ChallengePage from "./ChallengePage";
+
 import {Link} from "react-router-dom"
-import "./styles.css"
+import "../../styles.css"
 
 
 class ChallengeBox extends Component{
@@ -10,7 +10,7 @@ class ChallengeBox extends Component{
             return(
 
 
-
+            <div className="challengeBox col-sm-6 col-lg-4 mt-3 mb-3">
                 <Card style={{ width: '18rem' }} >
                     
                 <Card.Body>
@@ -57,6 +57,7 @@ class ChallengeBox extends Component{
 
                 
                 </Card>
+            </div>
                                                 
             )
         }

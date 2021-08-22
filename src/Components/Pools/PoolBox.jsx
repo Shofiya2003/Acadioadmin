@@ -1,5 +1,4 @@
 import React,{Component} from "react";
-import "./styles.css"
 import {Link} from "react-router-dom"
 import {Button,Card} from "react-bootstrap"
 class PoolBox extends Component{

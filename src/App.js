@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import {Route,Switch} from "react-router-dom";
-import Pool from "./Pool";
+import Pool from "./Components/Pools/Pool";
 import Login from "./Login"
 import Home from "./Home"
-import DisplayPool from "./DisplayPool";
+import DisplayPool from "./Components/Pools/DisplayPool";
 import DisplayPosts from "./DisplayPosts";
-import DisplayChallenges from "./DisplayChallenges";
-import ChallengePage from "./ChallengePage"
-import PoolPage from "./PoolPage"
+import DisplayChallenges from "./Components/Challenges/DisplayChallenges";
+import ChallengePage from "./Components/Challenges/ChallengePage"
+import PoolPage from "./Components/Pools/PoolPage"
 
 class App extends Component{
   constructor(){

@@ -1,8 +1,8 @@
 import axios from "axios";
 import React,{Component} from "react";
-import PoolBox from "./PoolBox";
+import PoolBox from "../Pools/PoolBox";
 import InfiniteScroll from "react-infinite-scroll-component";
-import "./styles.css"
+import "../../styles.css"
 class DisplayPool extends Component{
     constructor(){
 

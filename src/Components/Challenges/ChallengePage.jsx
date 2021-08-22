@@ -1,9 +1,34 @@
+import axios from "axios";
 import React,{Component} from "react";
-import {Card,Button} from "react-bootstrap";
+import {Card} from "react-bootstrap";
+import PostIndi from "../PostIndi";
 
 class ChallengePage extends Component{
 
-    
+    constructor(){
+        super();
+        this.state={
+            posts:[]
+        }
+    }
+
+    componentWillMount(){
+        console.log(this.props.location.obj.challenge._id);
+        axios.post("http://contest-test-2.herokuapp.com/challengePost/getAllPost_ofChallenge",{
+        
+            "ch_id":this.props.location.obj.challenge._id,
+            "uid":localStorage.getItem('id'),
+        }).then(res=>{
+            
+             this.setState({
+                 posts:res.data
+             })
+             console.log(this.state.posts);
+
+        }).catch(err=>{
+            console.log(err);
+        })
+    }
 
     render(){
     
@@ -50,6 +75,21 @@ class ChallengePage extends Component{
     
                     
                     </Card>
+
+                    <div>
+                        <h1>Posts</h1>
+                        <div className="row ml-3 mr-3">
+                            
+                                {this.state.posts.map(post=>{
+                                console.log(post);
+                            
+                                return <PostIndi post={post}></PostIndi>
+                            })}
+                            
+
+                        </div>
+                        
+                    </div>
               
                                                     
             </div>

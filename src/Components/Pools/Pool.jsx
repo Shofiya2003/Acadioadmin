@@ -1,8 +1,8 @@
 import React,{Component} from "react";
 import Modal from "react-modal";
 import axios from "axios";
-import "./styles.css"
-import {Redirect} from "react-router-dom";
+import "../../styles.css"
+
 
 class Pool extends Component{
   

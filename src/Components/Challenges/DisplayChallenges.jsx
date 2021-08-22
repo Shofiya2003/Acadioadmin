@@ -1,8 +1,8 @@
 import axios from "axios";
 import React,{Component} from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import ChallengeBox from "./ChallengeBox";
-import "./styles.css"
+import ChallengeBox from "../../Components/Challenges/ChallengeBox";
+import "../../styles.css";
 
 
  class DisplayChallenges extends Component{
@@ -55,7 +55,8 @@ import "./styles.css"
                     hasMore={this.state.hasMore}
                     loader={<h4>Loading...</h4>}
                 >
-                    <div className="challengeContainer">
+                
+                    <div className="challengeContainer row ml-3 mr-3">
                     {this.state.entries.map(obj=>{
                         return <ChallengeBox
                             obj={obj}
