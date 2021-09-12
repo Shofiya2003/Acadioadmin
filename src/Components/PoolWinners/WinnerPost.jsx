@@ -1,61 +1,47 @@
 import React,{Component} from "react";
 import ReactPlayer from "react-player";
-import {Card} from "react-bootstrap";
-import "../styles.css"
+import ReadMoreAndLess from "react-read-more-less";
+class WinnerPost extends Component{
 
 
-import ReadMoreAndLess from 'react-read-more-less';
-
-class PostIndi extends Component{
-    constructor(){
+    constructor(props){
         super();
-       
+        this.winner=props.winner
         this.state={
-            profile_pic:"",
-            
+            profile_pic:""
         }
-
-       
     }
 
 
-
-componentWillMount(){
-    
-    if(this.props.post.profile_pic===null || this.props.post.profile_pic==="" || this.props.post.profile_pic===undefined){
-        this.setState({
-            profile_pic:"https://zsquare-contest.s3.ap-south-1.amazonaws.com/images/profile_pic2.png"
-        })   
-    }else{
-        this.setState({
-            profile_pic:this.props.post.profile_pic
-        })
+    componentDidMount(){
+        if(this.winner.profile_pic===null || this.winner.profile_pic==="" || this.winner.profile_pic===undefined){
+            this.setState({
+                profile_pic:"https://zsquare-contest.s3.ap-south-1.amazonaws.com/images/profile_pic2.png"
+            })   
+        }else{
+            this.setState({
+                profile_pic:this.winner.profile_pic
+            })
+        }
     }
-
-    
-
-}
-
-
-
     render(){
-        return(
-            <div className="col-sm-6 col-lg-4 mt-3 mb-3">
+        
+            return <div style={{display:"flex",flexWrap:"wrap",justifyContent:"center"}}>
             <div className="card bg-white">
                 <div className="card-body">
                     <div>
                         <h5 class="card-title">
                             <img className="profilePic" src={this.state.profile_pic}/>
-                            <span className="name">{this.props.post.name}</span>
+                            <span className="name">{this.winner.name}</span>
                         </h5>
                     </div>
                 </div>
 
-                {this.props.post.post_type==='I' ?
+                {this.winner.post_type==='I' ?
                     <img
                     
                     class="card-img-top card_img"
-                    src={this.props.post.path}
+                    src={this.winner.path}
                     alt=""
                 />
                     :
@@ -65,11 +51,11 @@ componentWillMount(){
                    
             }
 
-{this.props.post.post_type==='V' ?
+{this.winner.post_type==='V' ?
                    <ReactPlayer
                     className="videoPlayer"
                     controls
-                    url={this.props.post.path}
+                    url={this.winner.path}
                    ></ReactPlayer>
                     :
 
@@ -81,7 +67,7 @@ componentWillMount(){
             <div className="card-body caption">
 
             
-                {this.props.post.caption===undefined ?
+                {this.winner.caption===undefined ?
                     <> </>
                     :
                     <ReadMoreAndLess 
@@ -92,30 +78,16 @@ componentWillMount(){
                         readLessText="Read less"
                         
                     >
-                        {this.props.post.caption}
+                        {this.winner.caption}
                     </ReadMoreAndLess>
                 
                 
                 
                 }
-
-                <input type="checkbox" id="winner" checked={this.props.s.includes(this.props.post._id)? true:null} disabled={this.props.disabled.includes(this.props.post._id)? true:null} onChange={()=>{
-                    const pid=this.props.onTick(this.props.post._id,this.props.post.uid);
-
-                }}></input>
-
-
-
-
             </div>
-        
-
-                
-           
             </div>
         </div>
-        )
     }
 }
 
-export default PostIndi;
+export default WinnerPost;

@@ -17,7 +17,7 @@ import "../../styles.css";
         }
     }
 
-    componentWillMount(){
+    componentDidMount(){
         console.log("ENTER");
         this.fetch();
     }
@@ -49,9 +49,16 @@ import "../../styles.css";
         return(
             <div>
                 <h1>Display Challenges</h1>
+                <select>
+                    
+                    <option id="talent" value="">ALL</option>
+                    <option id="talent" value="FULL">FULL</option>
+                    <option id="talent" value="OPEN">OPEN</option>
+                   
+               </select>
                 <InfiniteScroll 
                     dataLength={this.state.entries.length}
-                    next={this.fetch}
+                    next={this.state.mid!=="0" ? this.fetch:null}
                     hasMore={this.state.hasMore}
                     loader={<h4>Loading...</h4>}
                 >

@@ -6,9 +6,13 @@ import Home from "./Home"
 import DisplayPool from "./Components/Pools/DisplayPool";
 import DisplayPosts from "./DisplayPosts";
 import DisplayChallenges from "./Components/Challenges/DisplayChallenges";
-import ChallengePage from "./Components/Challenges/ChallengePage"
-import PoolPage from "./Components/Pools/PoolPage"
+import ChallengePage from "./Components/Challenges/ChallengePage";
+import PoolPage from "./Components/Pools/PoolPage";
 
+import ChallengeWinnerPage from "./Components/ChallengeWinners/ChallengeWinnerPage";
+import PoolWinnerPage from "./Components/PoolWinners/PoolWinnerPage";
+import PoolWinnerPosts from "./Components/PoolWinners/PoolWinnerPosts";
+import ContestWinners from "./Components/ContestWinner/ContestWinners";
 class App extends Component{
   constructor(){
 
@@ -46,6 +50,12 @@ class App extends Component{
             <Route path="/displayChallenges" component={DisplayChallenges}></Route>
             <Route path="/challengeInfo" component={ChallengePage} ></Route>
             <Route path="/poolInfo" component={PoolPage}></Route>
+            <Route path="/challengeWinners" component={ChallengeWinnerPage}></Route>
+            <Route path="/poolWinners" component={PoolWinnerPage}></Route>
+            <Route path="/poolWinnerPosts" component={PoolWinnerPosts}></Route>
+            <Route path="/contestWinners" component={ContestWinners}></Route>
+
+
             
           </Switch>
           

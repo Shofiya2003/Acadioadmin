@@ -15,14 +15,23 @@ class DisplayPool extends Component{
         }
     }
 
-    componentWillMount(){
-        console.log("Enter");
+
+    componentDidMount(){
         this.fetch();
     }
 
+    
+
+    componentDidUpdate(){
+        console.log(this.state.entries);
+        console.log(this.state.mid);
+    }
+
+    
+
 
     fetch(){
-        var that=this;
+        console.log("mid"+this.state.mid);
         axios.post("http://contest-test-2.herokuapp.com/pool/getAllMid_filter",{
             "talent":"",
             "mid":this.state.mid,
@@ -33,17 +42,19 @@ class DisplayPool extends Component{
                 this.setState({
                     entries:[...this.state.entries,...res.data.message],
                     mid:res.data.message[res.data.message.length-1]._id
-                })
+                });
+                
             }else{
-                console.log("FALSE")
                 this.setState({
                     hasMore:false
                 })
+                console.log("FALSE")
+               
             }
         }).catch(err=>{
             this.setState({hasMore:false})
             console.log(err);
-           
+            
         })
 
     }
@@ -57,7 +68,8 @@ class DisplayPool extends Component{
                 
                 <InfiniteScroll 
                     dataLength={this.state.entries.length}
-                    next={this.fetch}
+                    next={this.state.mid!=="0" ? this.fetch:null}
+                    
                     hasMore={this.state.hasMore}
                     loader={<h4>Loading...</h4>}
                 >
