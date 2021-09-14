@@ -1,9 +1,9 @@
 
 const status = {
-    baseUrl: "http://localhost:3025",
+    baseUrl: "https://contest-test-2.herokuapp.com",
     //baseUrl: "https://contest-test-2.herokuapp.com
     //http://localhost:3008
-    s3_url: "https://d3m7d3z5ov09fa.cloudfront.net/"
+    s3_url: "https://zsquare-contest.s3.ap-south-1.amazonaws.com/"
 };
 
 export default status;
