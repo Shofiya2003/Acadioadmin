@@ -2,7 +2,9 @@ import React,{Component} from "react";
 import axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component";
 import WinnerComponent from "./WinnerComponent";
-import {Button} from "react-bootstrap"
+import {Button} from "react-bootstrap";
+import status from '../status';
+
 class ContestWinners extends Component{
 
 
@@ -28,7 +30,7 @@ class ContestWinners extends Component{
 
 
     fetch(){
-        axios.post("http://contest-test-2.herokuapp.com/contest/getWinnerMidTEST",{
+        axios.post(status.baseUrl+"/contest/getWinnerMidTEST",{
             "mid":"0"
         }).then(response=>{
             if(response.data.message.length!==0){
@@ -51,7 +53,7 @@ class ContestWinners extends Component{
 
     //Send Notification to winners
     sendNotification(cid){
-        axios.post("http://contest-test-2.herokuapp.com/notifi/sendNotifi_ContestWinners",{
+        axios.post(status.baseUrl+"/notifi/sendNotifi_ContestWinners",{
             cid:cid.toString()
         }).then(response=>{
              alert(response.data.message+"  count: "+response.data.count);
@@ -63,13 +65,12 @@ class ContestWinners extends Component{
     
 
     notifyAllParticipants(cid){
-        console.log(cid);
-        axios.post("http://contest-test-2.herokuapp.com/notifi/sendNotifi_ContestParticipants",{
-            cid:cid.toString()
+        axios.post(status.baseUrl+"/notifi/sendNotifi_ContestParticipants",{
+            cid:cid
            
         }).then(response=>{
-            
-             alert(response.data.message+"  count: "+response.data.count);
+            console.log(response.data);
+            alert(response.data.message+"  count: "+response.data.count);
         }).catch(err=>{
             alert(err);
         })
@@ -100,13 +101,6 @@ class ContestWinners extends Component{
                                 </div>
                                
                                
-                                
-
-
-
-                                
-                                    
-                                
 
                                     <p>Winners:</p>
                                     <div style={{display:"flex",flexWrap:"wrap",justifyContent:"center"}}>

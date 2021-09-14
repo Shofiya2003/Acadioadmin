@@ -2,6 +2,7 @@ import React,{Component} from "react";
 import axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component";
 import WinnerComponent from "./WinnerComponent";
+import status from '../status';
 
 
 class ChallengeWinnerPage extends Component{
@@ -29,12 +30,12 @@ class ChallengeWinnerPage extends Component{
 
     fetch(){
         console.log("i am in fetch");
-        axios.post("http://contest-test-2.herokuapp.com/challenge/getEndedMid_filter",{
+        axios.post(status.baseUrl+"/challenge/getEndedMid_filter",{
             "talent":"",
             "mid":this.state.mid,
             "uid":localStorage.getItem("id")
         }).then(response=>{
-            console.log(response);
+            // console.log("DATA : "+JSON.stringify(status.baseUrl));
             if(response.data.message.length!==0){
                 this.setState({
                     winners:[...this.state.winners,...response.data.message],
@@ -55,7 +56,7 @@ class ChallengeWinnerPage extends Component{
     //Send Notification
 
     sendNotification(id){
-        axios.post("http://contest-test-2.herokuapp.com/notifi/sendNotifi_ChallengeWinners",{
+        axios.post("localhost:3025/notifi/sendNotifi_ChallengeWinners",{
             "ch_id":id
         }).then(response=>{
             alert(response.data.message);
