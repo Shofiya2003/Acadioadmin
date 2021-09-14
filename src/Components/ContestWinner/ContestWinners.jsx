@@ -25,15 +25,17 @@ class ContestWinners extends Component{
         this.fetch();
     }
 
+   
 
     //Fetch Function
 
 
     fetch(){
         axios.post(status.baseUrl+"/contest/getWinnerMidTEST",{
-            "mid":"0"
+            "mid":this.state.mid
         }).then(response=>{
             if(response.data.message.length!==0){
+                
                 this.setState({
                     contests:[...this.state.contests,...response.data.message],
                     mid:response.data.message[response.data.message.length-1]._id
