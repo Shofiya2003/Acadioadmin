@@ -45,7 +45,7 @@ class Pool extends Component{
             ...prevState,
           }))
           
-          console.log(response);
+          // console.log(response);
           alert(response.data.message);
           this.isCalled=false;
           this.setState(prevState=>({
@@ -59,7 +59,7 @@ class Pool extends Component{
             disabled:false
           }))
           
-          console.log(err.response)
+          // console.log(err.response)
           alert(err.response.data.message)
           this.isCalled=true;
         })
@@ -76,7 +76,7 @@ class Pool extends Component{
   //OnSuccess
   onSuccess(status){
       if(status===200){
-          console.log("Success");
+          // console.log("Success");
           window.location.assign("/home")
       }
   }
@@ -91,8 +91,8 @@ class Pool extends Component{
     let value=event.target.value;
    
     const id=event.target.id;
-    console.log(value);
-    console.log(id);
+    // console.log(value);
+    // console.log(id);
     if(!isNaN(value)) {
       value=parseInt(value)
     }
@@ -221,7 +221,7 @@ class Pool extends Component{
             <td>{key}</td>
             <td>{this.state.winnings[key]}</td>
             <td><button type="button" onClick={()=>{
-              console.log(key);
+              // console.log(key);
               this.toOpenModal(key);
             }} >Edit</button></td>
           </tr>

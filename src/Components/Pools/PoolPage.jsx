@@ -3,16 +3,14 @@ import {Card} from "react-bootstrap"
 import axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component";
 import PostIndi from "../PostIndi";
+import status from '../status';
+import {Button, Modal, Alert, Spinner, ProgressBar} from 'react-bootstrap';
 
 class PoolPage extends Component{
 
-    constructor(){
-        super();
-        this.fetch=this.fetch.bind(this);
-        this.addPosition=this.addPosition.bind(this);
-        this.removePosition=this.removePosition.bind(this);
-        this.onTick=this.onTick.bind(this);
-        this.submit=this.submit.bind(this);
+    constructor(props){
+        super(props);
+        
         this.state={
             posts:[],
             hasMore:true,
@@ -21,21 +19,132 @@ class PoolPage extends Component{
             position:[""],
             selected:[], 
             winners:{},
-            currentWinneruid:""
+            currentWinneruid:"",
 
+            showModal: false,
+            coverUrl: "",
+            error: false,
+            completePercent: 0,
+            imageHash: Date.now()
         }
+
+        this.fetch=this.fetch.bind(this);
+        this.addPosition=this.addPosition.bind(this);
+        this.removePosition=this.removePosition.bind(this);
+        this.onTick=this.onTick.bind(this);
+        this.submit=this.submit.bind(this);
+
+        this.editCoverPic = this.editCoverPic.bind(this);
+
+        //modal methods for edit cover_pic
+        this.editProfile = this.editProfile.bind(this)
+        this.handleCoverClose = this.handleCoverClose.bind(this)
+        this.handleChange = this.handleChange.bind(this)
+        this.handleCoverShow = this.handleCoverShow.bind(this)
+        this.handleUpload = this.handleUpload.bind(this)
+
+    }
+
+    handleChange = (ev) => {
+        this.setState({error: false, coverUrl: ""}); 
+    } 
+
+    handleCoverShow() {
+        console.log("Edit : "+this.state.showModal);
+        this.setState({showModal: true});
+    }
+
+    handleCoverClose() {
+        this.setState({showModal: false})
+    }
+
+    // Perform the upload
+    handleUpload = (ev) => {    
+        this.setState({completePercent: 10})
+        let file = this.uploadInput.files[0];
+        // Split the filename to get the name and type
+        let fileParts = this.uploadInput.files[0].name.split('.');
+        console.log("HERE 1");
+        var pool_name = this.props.location.obj.pool.pool_name.replace(/ +/g, "");
+        // var academy = status.website.replace(/ +/g, "");
+        var uid = localStorage.getItem("id");
+        let fileName = "pools_cover_pic/" + pool_name + "_" + this.props.location.obj.pool._id.substring(15, 21) + "_" + Math.floor(Math.random() * 101);
+        let fileType = fileParts[fileParts.length-1];   
+        //console.log("Preparing the upload : "+fileName+"   "+file);
+        axios.post(status.baseUrl+"/sign_s3",{
+        fileName : fileName,
+        fileType : fileType,
+        uid : localStorage.getItem("id")
+        }, {
+            headers: {
+              'Authorization': localStorage.getItem("token")
+            }
+          })
+        .then(response => {
+        var returnData = response.data.data.returnData;
+        var signedRequest = returnData.signedRequest;
+        var url = returnData.url;
+        this.setState({coverUrl: fileName})
+        //console.log("Recieved a signed request " + signedRequest);
+            // Put the fileType in the headers for the upload
+        var options = {
+            headers: {
+            'Content-Type': fileType
+            }
+        };
+        axios.put(signedRequest,file,options)
+        .then(result => {
+            //console.log("Response from s3")
+            this.setState({completePercent: 50})
+            this.editProfile()
+        })
+        .catch(error => {
+            //alert("ERROR " + JSON.stringify(error));
+        })
+        })
+        .catch(error => {
+        //alert(JSON.stringify(error));
+        })
+    }
+
+    editProfile() {
+        this.setState({completePercent: 60})
+
+        //console.log(this.props.location.state._id + " is cid")
+        console.log("NEW COVER : "+this.state.coverUrl);
+        console.log("OID : "+localStorage.getItem("id"));
+        axios.put(status.baseUrl+'/pool/editCoverPic', {
+            pool_id : this.props.location.obj.pool._id,
+            cover_pic: this.state.coverUrl,
+            oid: localStorage.getItem("id")
+        },{
+            headers: {
+              'Authorization': localStorage.getItem("token")
+            }
+          })
+        .then(response => {
+            console.log("Cover Pic updated");
+            if(response.data.message === "UPDATED") {
+              this.setState({data: {...this.state.posts, cover_pic: this.state.coverUrl}, imageHash: Date.now(), error: false, completePercent: 100})
+              this.handleCoverClose()
+              //console.log(this.state.coverUrl + " is cover url")
+            }  
+            else {
+                this.setState({error: true, completePercent: 0})
+            }
+      })
+        .catch(error => {
+            console.log(JSON.stringify(error));
+            this.setState({error: true, completePercent: 0})
+            
+        })
     }
 
 
-
-    componentWillMount()
-    {
-        console.log("ENTER");
-        
-    }
 
     componentDidUpdate(){
-       console.log(this.state.selected);
+    //    console.log(this.state.selected);
+       console.log("POOL : "+JSON.stringify(this.props.location.obj.pool));
     }
 
     
@@ -49,7 +158,7 @@ class PoolPage extends Component{
             "mid":this.state.mid
         }).then(response=>{
             if(response.data.message.length!==0){
-            
+                console.log("RES : " + JSON.stringify(response.data.message));
                 this.setState({
                     posts:[...this.state.posts,...response.data.message],
                     mid:response.data.message[response.data.message.length-1]._id
@@ -161,18 +270,66 @@ class PoolPage extends Component{
     }
 
 
+    editCoverPic()
+    {
+        console.log("EDIT");
+    }
+
 
     render(){
+
+        const ErrorMessage = () => (
+            <div style={{padding:50}}>
+              <h6 style={{color: 'red'}}>Something went Wrong, Please Try Again!</h6>
+              <br/>
+            </div>
+          )
+
         return(
-            <div>
-                 <Card style={{ width: '18rem' }} >
+            <>
+
+            {/* modal for edit cover pic  */}
+                   
+            <Modal animation={false} show={this.state.showModal} onHide={this.handleCoverClose} aria-labelledby="contained-modal-title-vcenter" centered>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Update Cover Photo</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <br/>
+                        <input onChange={this.handleChange} ref={(ref) => { this.uploadInput = ref; }} type="file"/>
+                        <br/><br/>
+                        <div>
+                            <ProgressBar striped variant="success" now={this.state.completePercent}  label={`${this.state.completePercent}%`}/>
+                        </div>
+                    {this.state.error ? <ErrorMessage /> : null}
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={this.handleCoverClose}>
+                        Close
+                        </Button>
+                        <Button variant="primary" onClick={this.handleUpload}>
+                        Update
+                        </Button>
+                    </Modal.Footer>
+                    </Modal>
                     
+                 <Card>
+                     
                     <Card.Body>
+                        
+                    <div class="col-12 col-lg-5 mt-2 no-padding">
+                            <img
+                                style={{width : "100%", height : "auto"}}
+                                class="card-img-top card_img bg-white shadow rounded overflow-hidden"
+                                alt=""
+                                src={(this.props.location.obj.pool.cover_pic===null || this.props.location.obj.pool.cover_pic===undefined || this.props.location.obj.pool.cover_pic==="") ? status.s3_url + "images/profile_bg.jpeg" : `${status.s3_url + this.props.location.obj.pool.cover_pic}?${this.state.imageHash}`}
+                            />
+                    </div>
                        
                     <p>Pool Name: {this.props.location.obj.pool.pool_name}</p>
                   
-                <img scr={this.props.location.obj.pool.coverPic} alt="cover pic"/>                  
-            
+                {/* <img height="30" width="30" scr={(this.props.location.obj.pool.coverPic===null || this.props.location.obj.pool.coverPic===undefined || this.props.location.obj.pool.coverPic==="") ? status.s3_url + this.props.location.obj.pool.coverPic : status.s3_url + "images/profile_bg.jpeg"} alt="cover pic"/>                   */}
+
                 <p>Talent: {this.props.location.obj.pool.talent}</p>
                 <p>End-Date: {this.props.location.obj.pool.end_date}</p>
                 <p>Fees: {this.props.location.obj.pool.fees}</p>
@@ -182,6 +339,14 @@ class PoolPage extends Component{
                 <p>Max Entries:{this.props.location.obj.pool.max_entries}</p>
                 <p>No of Winners:{this.props.location.obj.pool.no_of_winners}</p>
                 <p>Win Percent:{this.props.location.obj.pool.win_percent}</p>
+                <p>Rules:{this.props.location.obj.pool.rules}</p>
+                <p>Slots Filled:{this.props.location.obj.pool.slots_filled}</p>
+                <p>End:{this.props.location.obj.pool.end}</p>
+                <p>--v:{this.props.location.obj.pool.__v}</p>
+                <p>Your Entries:{this.props.location.obj.pool.your_entries}</p>
+
+
+                <Button onClick={this.handleCoverShow}>Edit Cover Pic</Button>
 
 
                 <table>
@@ -200,11 +365,6 @@ class PoolPage extends Component{
                 })}
                 </table>
 
-                <p>Rules:{this.props.location.obj.pool.rules}</p>
-                <p>Slots Filled:{this.props.location.obj.pool.slots_filled}</p>
-                <p>End:{this.props.location.obj.pool.end}</p>
-                <p>--v:{this.props.location.obj.pool.__v}</p>
-                <p>Your Entries:{this.props.location.obj.pool.your_entries}</p>
                   
                  
                     </Card.Body>
@@ -279,8 +439,7 @@ class PoolPage extends Component{
                     
                     </InfiniteScroll>
 
-                    
-            </div>
+            </>
         )
     }
 }

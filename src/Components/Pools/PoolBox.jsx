@@ -1,8 +1,11 @@
 import React,{Component} from "react";
 import axios from "axios";
-import {Link} from "react-router-dom"
-import {Button,Card} from "react-bootstrap"
-import Modal from "react-modal"
+import {Link} from "react-router-dom";
+import {Button,Card} from "react-bootstrap";
+import Modal from "react-modal";
+import status from '../status';
+
+
 class PoolBox extends Component{
     constructor(props){
         super(props);
@@ -79,28 +82,37 @@ class PoolBox extends Component{
         })
     }
     render(){
+        // console.log(this.props.coverPic);
         return(
-            <Card style={{ width: '18rem' }} >
+            <Card style={{ width: '18rem', paddingBottom: "10px", paddingLeft: "10px" }} >
                     
             <Card.Body>
-               
-           
 
-            <p>Pool Name: {this.state.pool_name}</p>
-                <img scr={this.props.coverPic} alt="cover pic"/>                  
+                            <img
+                                style={{width : "100%", height : "auto"}}
+                                class="card-img-top card_img bg-white shadow rounded overflow-hidden"
+                                alt=""
+                                src={(this.props.coverPic===null || this.props.coverPic===undefined || this.props.coverPic==="") ? status.s3_url + "images/profile_bg.jpeg" : status.s3_url + this.props.coverPic}
+                            />
+
+                    <p>Pool Name: {this.state.pool_name}</p>
+            
+                                        
             
                 <p>Talent: {this.state.talent}</p>
-                <p>End-Date: {this.state.end_date}</p>
+                <p>END: {this.props.obj.end}</p>
+
+                {/* <p>End-Date: {this.state.end_date}</p>
                 <p>Fees: {this.state.fees}</p>
                 <p>Curr: {this.props.curr}</p>
                 <p>Prize-Pool:{this.props.prizePool}</p>
                 <p>Slots:{this.props.totalSlots}</p>
                 <p>Max Entries:{this.props.maxEntries}</p>
                 <p>No of Winners:{this.props.noOfWinners}</p>
-                <p>Win Percent:{this.props.winPercent}</p>
+                <p>Win Percent:{this.props.winPercent}</p> */}
 
 
-                <table>
+                {/* <table>
                 <th>WINNINGS TABLE</th>
                 <tr>
                     <td>Position</td>
@@ -114,13 +126,13 @@ class PoolBox extends Component{
                     <td>{this.props.winnings[key]}</td>
                 </tr>
                 })}
-                </table>
+                </table> */}
 
-                <p>Rules:{this.props.rules}</p>
+                {/* <p>Rules:{this.props.rules}</p>
                 <p>Slots Filled:{this.props.slotsFilled}</p>
                 <p>End:{this.props.end}</p>
                 <p>--v:{this.props.v}</p>
-                <p>Your Entries:{this.props.yourEntries}</p>
+                <p>Your Entries:{this.props.yourEntries}</p> */}
                 
                 <Link to={{
                   pathname:"/poolInfo",
@@ -129,7 +141,7 @@ class PoolBox extends Component{
                   }
               }}>
               <Button variant="primary">Know More</Button></Link>
-              <Button variant="primary" onClick={this.update} style={{marginLeft:"20px"}}>Update</Button>
+              <Button variant="primary" onClick={this.update} style={{marginLeft:"20px", marginRight:"20px"}}>Update</Button>
               <Button variant="primary" onClick={this.openModal}>Edit Details</Button>     
 
              
