@@ -3,6 +3,7 @@ import React,{Component} from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ChallengeBox from "../../Components/Challenges/ChallengeBox";
 import "../../styles.css";
+import Nav from "../../nav"
 
 
  class DisplayChallenges extends Component{
@@ -48,7 +49,9 @@ import "../../styles.css";
     render(){
         return(
             <div>
-                <h1>Display Challenges</h1>
+                <Nav/>
+                <h1 className="mt-3 text-center text-color pagehead">Home</h1>
+                <hr/>
                 <select>
                     
                     <option id="talent" value="">ALL</option>
@@ -63,15 +66,20 @@ import "../../styles.css";
                     loader={<h4>Loading...</h4>}
                 >
                 
-                    <div className="challengeContainer row ml-3 mr-3">
+                <div className="row ml-3 mr-3">
                     {this.state.entries.map(obj=>{
-                        return <ChallengeBox
+                        return <div className="col-sm-6 col-lg-4 mt-3 mb-3">
+                        <div className='card bg-white shadow rounded overflow-hidden'>
+                        <ChallengeBox
+                            key={obj._id}
                             obj={obj}
                             
 
                         >
 
                         </ChallengeBox>
+                        </div>
+                        </div>
                     })}
 
                 </div>

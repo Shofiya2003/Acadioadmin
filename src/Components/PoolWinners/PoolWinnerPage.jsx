@@ -93,6 +93,12 @@ class PoolWinnerPage extends Component{
                             <div className='card bg-white shadow rounded overflow-hidden' style={{paddingLeft:"17px",paddingRight:"17px",paddingTop:"15px"}}>
                             {/* <div style={{border:"1px solid black", fontSize:"16px", margin:"10px",flexBasis:"40%",paddingLeft:"10px"}}> */}
                                 <h2>Pool Name: {pool["pool_name"]}</h2>
+                                {
+                                    pool.cover_pic===null || pool.cover_pic==="" || pool.cover_pic===undefined?
+                                    <img src={status.s3_url+"images/profile_bg.jpeg"} alt="cover_pic" style={{width:"100%"}}/>
+                                    :
+                                    <img src={status.s3_url+pool.contest_cover_pic} alt="cover_pic" style={{width:"100%"}}/>
+                                }
                                 <p>Date: {pool["date"]}</p>
                                 <p>Talent: {pool["talent"]}</p>
                                 <p>Prize:</p>

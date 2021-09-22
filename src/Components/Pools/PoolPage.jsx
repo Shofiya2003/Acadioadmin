@@ -2,7 +2,7 @@ import React,{Component} from "react";
 import {Card} from "react-bootstrap"
 import axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component";
-import PostIndi from "../PostIndi";
+import PostIndi from "../Pools/PostIndi";
 import status from '../status';
 import {Button, Modal, Alert, Spinner, ProgressBar} from 'react-bootstrap';
 import Nav from "../../nav"

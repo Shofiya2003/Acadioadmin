@@ -1,11 +1,12 @@
 import React,{Component} from "react";
 import ReactPlayer from "react-player";
 import {Card} from "react-bootstrap";
-import "../styles.css"
+
 import Modal from "react-modal";
 
 import ReadMoreAndLess from 'react-read-more-less';
 import {Button} from "react-bootstrap";
+import status  from "../status";
 import axios from "axios";
 
 class PostIndi extends Component{
@@ -31,11 +32,11 @@ componentWillMount(){
     
     if(this.props.post.profile_pic===null || this.props.post.profile_pic==="" || this.props.post.profile_pic===undefined){
         this.setState({
-            profile_pic:"https://zsquare-contest.s3.ap-south-1.amazonaws.com/images/profile_pic2.png"
+            profile_pic:status.s3_url+"/images/profile_pic2.png"
         })   
     }else{
         this.setState({
-            profile_pic:this.props.post.profile_pic
+            profile_pic:status.s3_url+this.props.post.profile_pic
         })
     }
 
@@ -196,7 +197,10 @@ handleCoverClose(){
                 
                 }
 
-                <input type="checkbox" id="winner"></input>
+                <input type="checkbox" id="winner" checked={this.props.s.includes(this.props.post._id)? true:null} disabled={this.props.disabled.includes(this.props.post._id)? true:null} onChange={()=>{
+                    this.props.onTick(this.props.post._id,this.props.post.uid);
+
+                }}></input>
 
 
 

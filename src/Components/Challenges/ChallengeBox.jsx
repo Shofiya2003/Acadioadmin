@@ -10,8 +10,8 @@ class ChallengeBox extends Component{
             return(
 
 
-            <div className="challengeBox col-sm-6 col-lg-4 mt-3 mb-3">
-                <Card style={{ width: '18rem' }} >
+                <div className="card-body pt-2 pl-2 pb-0 bg-light">
+              
                     
                 <Card.Body>
                    
@@ -56,7 +56,7 @@ class ChallengeBox extends Component{
                 </Card.Body>
 
                 
-                </Card>
+                
             </div>
                                                 
             )
