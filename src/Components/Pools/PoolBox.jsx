@@ -32,6 +32,11 @@ class PoolBox extends Component{
 
     }
 
+
+    componentDidUpdate(){
+        console.log(this.state.talent);
+    }
+
     openModal(){
         this.setState({
             modalIsOpen:true,
@@ -40,6 +45,7 @@ class PoolBox extends Component{
     }
 
     onChange(event){
+        console.log(event.target.id);
         this.setState({
             [event.target.id]:event.target.value
         })
@@ -51,7 +57,7 @@ class PoolBox extends Component{
             return;
         }
         console.log(this.state.talent);
-        axios.patch("http://localhost:3000/pool/editDetails",{
+        axios.patch(status.baseUrl+"pool/editDetails",{
             _id:this.props.obj._id,
             pool_name:this.state.pool_name,
             talent:this.state.talent,
@@ -137,7 +143,11 @@ class PoolBox extends Component{
                 <Link to={{
                   pathname:"/poolInfo",
                   obj:{
-                      pool:this.props.obj
+                      pool:this.props.obj,
+                      talent:this.state.talent,
+                      pool_name:this.state.pool_name,
+                      end_date:this.state.end_date,
+                      fees:this.state.fees  
                   }
               }}>
               <Button variant="primary">Know More</Button></Link>
@@ -157,12 +167,13 @@ class PoolBox extends Component{
                   <label for="pool_name"/> Pool Name<br/>
                   <input type="text" value={this.state.pool_name} id="pool_name" onChange={this.onChange}/><br/>
                   <label for="talent"/> Talent <br/>
-                 <select id="talent">
+                 <select id="talent" onChange={this.onChange}>
                      <option defaultValue>{this.state.talent}</option>
                     {this.state.talents.map(talent=>{
                         if(talent!==this.state.talent){
                             return <option>{talent}</option>
                         }
+                        return null;
                     })}
                  </select><br/>
                   <label for="end_date"/> End-Date<br/>

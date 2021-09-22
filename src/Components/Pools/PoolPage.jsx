@@ -26,7 +26,8 @@ class PoolPage extends Component{
             coverUrl: "",
             error: false,
             completePercent: 0,
-            imageHash: Date.now()
+            imageHash: Date.now(),
+            profile_pic:""
         }
 
         this.fetch=this.fetch.bind(this);
@@ -44,6 +45,19 @@ class PoolPage extends Component{
         this.handleCoverShow = this.handleCoverShow.bind(this)
         this.handleUpload = this.handleUpload.bind(this)
 
+    }
+
+
+    componentDidMount(){
+        if(this.props.location.obj.pool.profile_pic===null || this.props.location.obj.poolprofile_pic==="" || this.props.location.obj.poolprofile_pic===undefined){
+            this.setState({
+                profile_pic:status.s3_url+"/images/profile_pic2.png"
+            })   
+        }else{
+            this.setState({
+                profile_pic:status.s3_url+this.props.obj.poolprofile_pic
+            })
+        }
     }
 
     handleChange = (ev) => {
@@ -66,7 +80,7 @@ class PoolPage extends Component{
         // Split the filename to get the name and type
         let fileParts = this.uploadInput.files[0].name.split('.');
         console.log("HERE 1");
-        var pool_name = this.props.location.obj.pool.pool_name.replace(/ +/g, "");
+        var pool_name = this.props.location.obj.pool_name.replace(/ +/g, "");
         // var academy = status.website.replace(/ +/g, "");
         var uid = localStorage.getItem("id");
         let fileName = "pools_cover_pic/" + pool_name + "_" + this.props.location.obj.pool._id.substring(15, 21) + "_" + Math.floor(Math.random() * 101);
@@ -341,18 +355,18 @@ class PoolPage extends Component{
                             <div className="col-12 col-lg-6 mt-3 no-margin no-padding text-center">
                                 <div className="padding-50">
                                     <div className="bg-white shadow rounded overflow-hidden pb-3">
-                                        <h4 className="font-weight-normal text-color cname">{this.props.location.obj.pool.pool_name}</h4>
+                                        <h4 className="font-weight-normal text-color cname">{this.props.location.obj.pool_name}</h4>
                                         <br/>
                                         <br/>
                                         <div className="drop-shadow2 card-zoom ml-4 mr-4 pb-2 pt-2">
                                         <h5 className="card-title text-dark">
                                             <span className="ml-2 post_name"></span>
-                                            <img src={this.state.profile_pic} style={{height:"30px", float:"left" ,marginRight:"20px"}}/>
+                                            <img src={this.state.profile_pic} style={{height:"30px", float:"left" ,marginRight:"20px"}} alt="profile_pic"/>
                                         </h5>
                                         </div>
                                         <div className="font-weight-light mt-4 mr-2 desc desc-wrap">
-                                        <p>End-Date: {this.props.location.obj.pool.end_date}</p>
-                                        <p>Fees: {this.props.location.obj.pool.fees}</p>
+                                        <p>End-Date: {this.props.location.obj.end_date}</p>
+                                        <p>Fees: {this.props.location.obj.fees}</p>
                                         <p>Curr: {this.props.location.obj.pool.curr}</p>
                                         <p>Prize-Pool:{this.props.location.obj.pool.prize_pool}</p>
                                         <p>Slots:{this.props.location.obj.pool.total_slots}</p>
@@ -362,7 +376,7 @@ class PoolPage extends Component{
                                         <p>Rules:{this.props.location.obj.pool.rules}</p>
                                         <p>Slots Filled:{this.props.location.obj.pool.slots_filled}</p>
                                         <p>End:{this.props.location.obj.pool.end}</p>
-                                        <p>Talent: {this.props.location.obj.pool.talent}</p>
+                                        <p>Talent: {this.props.location.obj.talent}</p>
                                         <p>Your Entries:{this.props.location.obj.pool.your_entries}</p>
                                         </div>
                                         <hr/>
