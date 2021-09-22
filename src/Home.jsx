@@ -7,6 +7,7 @@ import Modal from 'react-modal';
 import {Button,Navbar,NavLink} from 'react-bootstrap';
 import axios from "axios";
 import Nav from "./nav";
+import status from "./Components/status";
 class Home extends Component{
     constructor(){
         super();
@@ -28,11 +29,11 @@ class Home extends Component{
             alert("Select Talent");
             return;
         }
-        axios.patch('http://localhost:3000/rule/editRules',{
+        axios.patch(status.baseUrl+'/rules/editRules',{
             talent:this.state.talent,
             rules:this.state.rules
         }).then(res=>{
-            console.log(res.data.message);
+            alert(res.data.message);
             this.setState({
                 modalIsOpen:false
             })
@@ -50,7 +51,7 @@ class Home extends Component{
     }
 
     backup(){
-        axios.get("http://localhost:3000/backup").then(response=>{
+        axios.get(status.baseUrl+"/backup").then(response=>{
             const data=response.data;
             console.log(data);
             data.forEach(database => {

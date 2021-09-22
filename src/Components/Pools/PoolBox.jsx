@@ -57,7 +57,7 @@ class PoolBox extends Component{
             return;
         }
         console.log(this.state.talent);
-        axios.patch(status.baseUrl+"pool/editDetails",{
+        axios.patch(status.baseUrl+"/pool/editDetails",{
             _id:this.props.obj._id,
             pool_name:this.state.pool_name,
             talent:this.state.talent,
@@ -71,7 +71,7 @@ class PoolBox extends Component{
                 });
             }
         }).catch(err=>{
-            console.log(err.response.message);
+            console.log(err.message);
         });
    
         
@@ -79,12 +79,12 @@ class PoolBox extends Component{
 
 
     update(){
-        axios.post("http://contest-test-2.herokuapp.com/poolwinner/editDeadline",{
+        axios.post(status.baseUrl+"/poolwinner/editDeadline",{
             pool_id:this.props.obj._id
         }).then(response=>{
             alert(response.data.message);
         }).catch(err=>{
-            alert(err.response.message);
+            alert(err);
         })
     }
     render(){

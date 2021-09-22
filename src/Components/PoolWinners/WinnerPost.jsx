@@ -1,6 +1,7 @@
 import React,{Component} from "react";
 import ReactPlayer from "react-player";
 import ReadMoreAndLess from "react-read-more-less";
+import status from "../status";
 class WinnerPost extends Component{
 
 
@@ -16,11 +17,11 @@ class WinnerPost extends Component{
     componentDidMount(){
         if(this.winner.profile_pic===null || this.winner.profile_pic==="" || this.winner.profile_pic===undefined){
             this.setState({
-                profile_pic:"https://zsquare-contest.s3.ap-south-1.amazonaws.com/images/profile_pic2.png"
+                profile_pic:status.s3_url+"/images/profile_pic2.png"
             })   
         }else{
             this.setState({
-                profile_pic:this.winner.profile_pic
+                profile_pic:status.s3_url+this.winner.profile_pic
             })
         }
     }
@@ -31,7 +32,7 @@ class WinnerPost extends Component{
                 <div className="card-body">
                     <div>
                         <h5 class="card-title">
-                            <img className="profilePic" src={this.state.profile_pic}/>
+                            <img className="profilePic" src={this.state.profile_pic} alt="profile_pic"/>
                             <span className="name">{this.winner.name}</span>
                         </h5>
                     </div>

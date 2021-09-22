@@ -58,7 +58,7 @@ class PoolWinnerPage extends Component{
 
     //Send Notification
     sendNotification(id){
-        axios.post(status.baseUrl+"/sendNotifi_PoolWinners",{
+        axios.post(status.baseUrl+"/notifi/sendNotifi_PoolWinners",{
             "pool_id":id
         }).then(response=>{
             alert(response.data.message);
@@ -97,7 +97,7 @@ class PoolWinnerPage extends Component{
                                     pool.cover_pic===null || pool.cover_pic==="" || pool.cover_pic===undefined?
                                     <img src={status.s3_url+"images/profile_bg.jpeg"} alt="cover_pic" style={{width:"100%"}}/>
                                     :
-                                    <img src={status.s3_url+pool.contest_cover_pic} alt="cover_pic" style={{width:"100%"}}/>
+                                    <img src={status.s3_url+pool.cover_pic} alt="cover_pic" style={{width:"100%"}}/>
                                 }
                                 <p>Date: {pool["date"]}</p>
                                 <p>Talent: {pool["talent"]}</p>

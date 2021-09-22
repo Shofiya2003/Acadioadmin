@@ -58,12 +58,12 @@ class ChallengeWinnerPage extends Component{
     //Send Notification
 
     sendNotification(id){
-        axios.post("localhost:3025/notifi/sendNotifi_ChallengeWinners",{
+        axios.post(status.baseUrl+"/notifi/sendNotifi_ChallengeWinners",{
             "ch_id":id
         }).then(response=>{
             alert(response.data.message);
         }).catch(err=>{
-            alert(err.response.message);
+            alert(err.message);
         })
     }
 

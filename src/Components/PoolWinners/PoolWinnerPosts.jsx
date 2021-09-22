@@ -1,6 +1,7 @@
 import axios from "axios";
 import React,{Component} from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import status from "../status";
 import WinnerPost from "./WinnerPost";
 
 
@@ -31,7 +32,7 @@ class PoolWinnerPosts extends Component{
         console.log(this.state.prize)
     }
     fetch(){
-        axios.post("http://contest-test-2.herokuapp.com/poolwinner/getWinnersPost_ofPool_byrank",{
+        axios.post(status.baseUrl+"/poolwinner/getWinnersPost_ofPool_byrank",{
             "pool_id":this.props.location.obj._id,
             "mid":this.state.mid
         }).then(response=>{
@@ -102,7 +103,7 @@ class PoolWinnerPosts extends Component{
        }
        
 
-        axios.post("http://contest-test-2.herokuapp.com/poolwinner/payPoolWinners",{
+        axios.post(status.baseUrl+"/poolwinner/payPoolWinners",{
             pool_id:this.props.location.obj._id,
             winners:this.state.prize,
             secret:"Pay@Acadio@Pool"
