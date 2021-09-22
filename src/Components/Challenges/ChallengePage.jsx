@@ -2,6 +2,7 @@ import axios from "axios";
 import React,{Component} from "react";
 import {Card} from "react-bootstrap";
 import PostIndi from "../PostIndi";
+import status from "../status";
 
 class ChallengePage extends Component{
 
@@ -21,12 +22,12 @@ class ChallengePage extends Component{
 
     componentWillMount(){
        
-        axios.post("http://contest-test-2.herokuapp.com/challengePost/getAllPost_ofChallenge",{
+        axios.post(status.baseUrl+"/challengePost/getAllPost_ofChallenge",{
         
             "ch_id":this.props.location.obj.challenge._id,
             "uid":localStorage.getItem('id'),
         }).then(res=>{
-            
+            console.log(res.data)
              this.setState({
                  posts:res.data
              })
@@ -76,7 +77,7 @@ class ChallengePage extends Component{
 
         
          
-        axios.post("http://contest-test-2.herokuapp.com/challengeWinner/create",{
+        axios.post(status.baseUrl+"/challengeWinner/create",{
             "declarer_id":localStorage.getItem("id"),
             "ch_id":this.props.location.obj.challenge._id,
             "winners":this.state.winners

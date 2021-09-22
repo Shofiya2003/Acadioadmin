@@ -17,7 +17,7 @@ class WinnerPost extends Component{
     componentDidMount(){
         if(this.winner.profile_pic===null || this.winner.profile_pic==="" || this.winner.profile_pic===undefined){
             this.setState({
-                profile_pic:status.s3_url+"/images/profile_pic2.png"
+                profile_pic:status.s3_url+"images/profile_pic2.png"
             })   
         }else{
             this.setState({

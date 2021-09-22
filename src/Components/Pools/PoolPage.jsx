@@ -27,7 +27,7 @@ class PoolPage extends Component{
             error: false,
             completePercent: 0,
             imageHash: Date.now(),
-            profile_pic:""
+           
         }
 
         this.fetch=this.fetch.bind(this);
@@ -48,17 +48,7 @@ class PoolPage extends Component{
     }
 
 
-    componentDidMount(){
-        if(this.props.location.obj.pool.profile_pic===null || this.props.location.obj.poolprofile_pic==="" || this.props.location.obj.poolprofile_pic===undefined){
-            this.setState({
-                profile_pic:status.s3_url+"/images/profile_pic2.png"
-            })   
-        }else{
-            this.setState({
-                profile_pic:status.s3_url+this.props.obj.poolprofile_pic
-            })
-        }
-    }
+    
 
     handleChange = (ev) => {
         this.setState({error: false, coverUrl: ""}); 
@@ -359,10 +349,7 @@ class PoolPage extends Component{
                                         <br/>
                                         <br/>
                                         <div className="drop-shadow2 card-zoom ml-4 mr-4 pb-2 pt-2">
-                                        <h5 className="card-title text-dark">
-                                            <span className="ml-2 post_name"></span>
-                                            <img src={this.state.profile_pic} style={{height:"30px", float:"left" ,marginRight:"20px"}} alt="profile_pic"/>
-                                        </h5>
+                                       
                                         </div>
                                         <div className="font-weight-light mt-4 mr-2 desc desc-wrap">
                                         <p>End-Date: {this.props.location.obj.end_date}</p>

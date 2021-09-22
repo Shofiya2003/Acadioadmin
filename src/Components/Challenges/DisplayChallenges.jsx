@@ -4,6 +4,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import ChallengeBox from "../../Components/Challenges/ChallengeBox";
 import "../../styles.css";
 import Nav from "../../nav"
+import status from "../status";
 
 
  class DisplayChallenges extends Component{
@@ -25,11 +26,12 @@ import Nav from "../../nav"
 
 
     fetch(){
-        axios.post("http://contest-test-2.herokuapp.com/challenge/getAllMid_filter",{
+        axios.post(status.baseUrl+"/challenge/getAllMid_filter",{
             "talent":"",
             "mid":this.state.mid,
             "uid":"6080867f28ee66187a2d4cc5"
         }).then(res=>{
+            
             if(res.data.message.length!==0){
                 this.setState({
                     entries:[...this.state.entries,...res.data.message],
@@ -50,7 +52,7 @@ import Nav from "../../nav"
         return(
             <div>
                 <Nav/>
-                <h1 className="mt-3 text-center text-color pagehead">Home</h1>
+                <h1 className="mt-3 text-center text-color pagehead">Challenges</h1>
                 <hr/>
                 <select>
                     

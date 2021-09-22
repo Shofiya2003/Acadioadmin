@@ -15,7 +15,7 @@ class ChallengeBox extends Component{
                     
                 <Card.Body>
                    
-                <Card.Title>ch_name:{this.props.obj.ch_name}</Card.Title>
+                <Card.Title>{this.props.obj.ch_name}</Card.Title>
                 <Card.Text>No. Of Participants:{this.props.obj["no_of_participants"]}</Card.Text>
     
                  <Card.Text>talent:{this.props.obj["talent"]}</Card.Text>

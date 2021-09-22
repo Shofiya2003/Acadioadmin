@@ -32,7 +32,7 @@ componentWillMount(){
     
     if(this.props.post.profile_pic===null || this.props.post.profile_pic==="" || this.props.post.profile_pic===undefined){
         this.setState({
-            profile_pic:status.s3_url+"/images/profile_pic2.png"
+            profile_pic:status.s3_url+"images/profile_pic2.png"
         })   
     }else{
         this.setState({
@@ -82,10 +82,11 @@ onClickSubmit(){
             showErrorMessage:false,
         });
     }
-    const url="http://localhost:3000/post/deleteById/"+this.state._idToBeDeleted;
+    const url=status.baseUrl+"/post/deleteById/"+this.state._idToBeDeleted;
     axios.delete(url,{
-        id:this.state._idToBeDeleted,
-        uid:this.state.uidOfDeletedPost
+        uid:this.state.uidOfDeletedPost,
+        id:this.state._idToBeDeleted
+        
     }).then(response=>{
         alert(response.data.message);
         this.setState({
