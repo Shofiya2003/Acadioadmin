@@ -4,9 +4,9 @@ import {Link} from "react-router-dom";
 import DisplayPool from "./Components/Pools/DisplayPool";
 import Display from "./DisplayPosts";
 import Modal from 'react-modal';
-import {Button} from 'react-bootstrap';
+import {Button,Navbar,NavLink} from 'react-bootstrap';
 import axios from "axios";
-
+import Nav from "./nav";
 class Home extends Component{
     constructor(){
         super();
@@ -77,43 +77,49 @@ class Home extends Component{
     render(){
         return(
             <div>
-                <h1>Home</h1>
-                <Link to="/poolCreate"><button className="home-buttons">Create A Pool</button></Link>
                 
-                <button type="button" className="home-buttons" onClick={()=>{
+                <Nav/>
+                <h1 className="mt-3 text-center text-color pagehead">Home</h1>
+                <hr/>
+                <div className="row" style={{justifyContent:"center"}}>
+                <Button type="Button" variant="primary" size="lg" className="home-buttons col-lg-4 col-md-3 " onClick={()=>{
+                    window.location.assign("/poolCreate");
+                }}>Create a Pool</Button>
+                <Button type="Button" variant="primary" size="lg" className="home-buttons col-lg-4 col-md-3" onClick={()=>{
                     window.location.assign("/displayPosts");
-                }}>Posts</button>
-                <button className="home-buttons" onClick={()=>{
+                }}>Posts</Button>
+                <Button className="home-buttons col-lg-4 col-md-3" variant="primary" size="lg" onClick={()=>{
                     window.location.assign("/displayPools");
-                }}>Display Pools</button>
+                }}>Display Pools</Button>
                 
                     
           
-                 <button type="button" className="home-buttons" onClick={()=>{
+                 <Button type="Button" variant="primary" size="lg" className="home-buttons col-lg-4 col-md-3 " onClick={()=>{
                     window.location.assign("/displayChallenges")
-                }}>Display Challenges</button>
+                }}>Display Challenges</Button>
              
-               <button type="button" className="home-buttons" onClick={()=>{
+               <Button type="Button" variant="primary" size="lg" className="home-buttons col-lg-4 col-md-3 " onClick={()=>{
                    window.location.assign("/challengeWinners");
-               }}>Challenge Winners</button>
+               }}>Challenge Winners</Button>
 
-                <button type="button" className="home-buttons" onClick={()=>{
+                <Button type="Button" variant="primary" size="lg" className="home-buttons col-lg-4 col-md-3 " onClick={()=>{
                    window.location.assign("/poolWinners");
-               }}>Pool Winners</button>
+               }}>Pool Winners</Button>
 
-               <button type="button" className="home-buttons" onClick={()=>{
+               <Button type="Button" variant="primary" size="lg" className="home-buttons col-lg-4 col-md-3 " onClick={()=>{
                    window.location.assign("/contestWinners");
-               }}>Contest Winners</button>
+               }}>Contest Winners</Button>
 
-                <button type="button" className="home-buttons" onClick={this.backup}>
+                <Button type="Button" variant="primary" size="lg" className="home-buttons col-lg-4 col-md-3 " onClick={this.backup}>
 
-               Back Up</button>
+               Back Up</Button>
 
-                <button type="button" className="home-buttons" onClick={()=>{
+                <Button type="Button" variant="primary" size="lg" className="home-buttons col-lg-4 col-md-3 " onClick={()=>{
                    this.setState({
                        modalIsOpen:true
                    })
-               }}>Edit Rules</button>
+               }}>Edit Rules</Button>
+               </div>
             <Modal
                 isOpen={this.state.modalIsOpen}
             >
@@ -135,7 +141,7 @@ class Home extends Component{
                 <Button variant="primary" onClick={this.edit}>Edit</Button>
               </Modal>
 
-                <button type="button" className="home-buttons" onClick={this.toLogout}>Logout</button>
+                
             </div>
         )
     }

@@ -3,6 +3,7 @@ import React,{Component} from "react";
 import PoolBox from "../Pools/PoolBox";
 import InfiniteScroll from "react-infinite-scroll-component";
 import "../../styles.css"
+import Nav from "../../nav"
 class DisplayPool extends Component{
     constructor(){
 
@@ -63,8 +64,11 @@ class DisplayPool extends Component{
 
     render(){
         return(
-            <div >
-                <h1>Display Pool</h1>
+            <div>
+                <Nav/>
+                <h1 className="mt-3 text-center text-color pagehead">Display Pools</h1>
+                <hr/>
+                
                 
                 <InfiniteScroll 
                     dataLength={this.state.entries.length}
@@ -73,11 +77,13 @@ class DisplayPool extends Component{
                     hasMore={this.state.hasMore}
                     loader={<h4>Loading...</h4>}
                 >
+                <div className="row ml-3 mr-3">
                 
-                <div className="poolContainer">
                
                 {this.state.entries.map(obj=>{
-                    return <PoolBox 
+                     return <div className="col-sm-6 col-lg-4 mt-3 mb-3">
+                     <div className='card bg-white shadow rounded overflow-hidden'>
+                    <PoolBox 
                         obj={obj}
                         poolName={obj["pool_name"]}
                         coverPic={obj["cover_pic"]}
@@ -99,9 +105,11 @@ class DisplayPool extends Component{
                     
                     
                     />
-
+                    </div>
+                    </div>
                    
                 })}
+
                 
                 </div>
                 </InfiniteScroll>

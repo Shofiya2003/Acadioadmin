@@ -3,6 +3,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import PostBox from "./PostBox";
 import "./styles.css"
 import axios from "axios"
+import Nav from "./nav";
 
 class Display extends Component{
     constructor(){
@@ -61,7 +62,9 @@ class Display extends Component{
     render(){
         return(
             <div>
-                <h1>Display Posts</h1>
+                <Nav/>
+                <h1 className="mt-3 text-center text-color pagehead">Home</h1>
+                <hr/>
                 <InfiniteScroll
                     dataLength={this.state.entries.length}
                     next={this.fetch}
@@ -70,13 +73,14 @@ class Display extends Component{
 
                 >
 
-
-
-
-                <div className="postContainer">     
+               <div className="row ml-3 mr-3">
+                  
+                       
+                       
                     {this.state.entries.map(obj=>{
-                    
-                        return <PostBox cname={obj["cname"]}
+                    return <div className="col-sm-6 col-lg-4 mt-3 mb-3">
+                     <div className='card bg-white shadow rounded overflow-hidden'>
+                         <PostBox cname={obj["cname"]}
                                 academy={obj["academy"]}
                                 certiBool={obj["certi_bool"]}
                                 coverPic={obj["cover_pic"]}
@@ -92,10 +96,17 @@ class Display extends Component{
                                 profilePic={obj["profile_pic"]}
                                 talent={obj["talent"]}
                     ></PostBox>
-                        
+                        </div> 
+                        </div>
                     })}
 
-                </div>
+                
+                      
+                   
+                </div> 
+
+
+                
                     
                 </InfiniteScroll>
               

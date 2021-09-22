@@ -84,7 +84,7 @@ class PoolBox extends Component{
     render(){
         // console.log(this.props.coverPic);
         return(
-            <Card style={{ width: '18rem', paddingBottom: "10px", paddingLeft: "10px" }} >
+            <Card className="card-body pt-2 pl-2 pb-0 bg-light">
                     
             <Card.Body>
 

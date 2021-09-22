@@ -3,6 +3,9 @@ import axios from "axios";
 import {Link} from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 import WinnerComponent from "../ChallengeWinners/WinnerComponent";
+import status from "../status"
+import {Button}  from "react-bootstrap";
+import Nav from "../../nav"
 import Pool from "../Pools/Pool";
 
 
@@ -30,7 +33,7 @@ class PoolWinnerPage extends Component{
 
     fetch(){
         console.log("i am in fetch");
-        axios.post("http://contest-test-2.herokuapp.com/pool/getEndedMid_filter",{
+        axios.post(status.baseUrl+"/pool/getEndedMid_filter",{
             "talent":"",
             "mid":this.state.mid,
             "uid":localStorage.getItem("id")
@@ -55,7 +58,7 @@ class PoolWinnerPage extends Component{
 
     //Send Notification
     sendNotification(id){
-        axios.post("http://contest-test-2.herokuapp.com/notifi/sendNotifi_PoolWinners",{
+        axios.post(status.baseUrl+"/sendNotifi_PoolWinners",{
             "pool_id":id
         }).then(response=>{
             alert(response.data.message);
@@ -70,7 +73,9 @@ class PoolWinnerPage extends Component{
 
     render(){
         return <>
-            <h1>POOL WINNERS</h1>
+            <Nav/>
+            <h1 className="mt-3 text-center text-color pagehead">Pool Winners</h1>
+            <hr/>
             <div>
                 <InfiniteScroll
                     dataLength={this.state.winners.length}
@@ -79,12 +84,14 @@ class PoolWinnerPage extends Component{
                     loader={<h4>Loading...</h4>}
                 >
 
-                    <div style={{display:"flex", justifyContent:"center", flexWrap:"wrap"}}>
+                    <div className="row ml-3 mr-3">
 
                
                         {this.state.winners.map(pool=>{
                            
-                            return <div style={{border:"1px solid black", fontSize:"16px", margin:"10px",flexBasis:"40%",paddingLeft:"10px"}}>
+                            return  <div className="col-sm-6 col-lg-4 mt-3 mb-3">
+                            <div className='card bg-white shadow rounded overflow-hidden' style={{paddingLeft:"17px",paddingRight:"17px",paddingTop:"15px"}}>
+                            {/* <div style={{border:"1px solid black", fontSize:"16px", margin:"10px",flexBasis:"40%",paddingLeft:"10px"}}> */}
                                 <h2>Pool Name: {pool["pool_name"]}</h2>
                                 <p>Date: {pool["date"]}</p>
                                 <p>Talent: {pool["talent"]}</p>
@@ -102,19 +109,24 @@ class PoolWinnerPage extends Component{
                                     })}
 
                                 </div>
+
+                                <div>
+                                    <Link to={{
+                                        pathname:"/poolWinnerPosts",
+                                        obj:{
+                                            _id:pool._id,
+                                            name:pool.pool_name
+                                        }
+                                    }}><Button style={{margin:'20px'}}>Show Winners</Button> </Link>  
+                                    <Button style={{margin:'20px'}} onClick={()=>{
+                                        this.sendNotification(pool._id);
+                                    }}>Send Notification</Button>
+                                </div>
                                 
-                                 <Link to={{
-                                     pathname:"/poolWinnerPosts",
-                                     obj:{
-                                         _id:pool._id,
-                                         name:pool.pool_name
-                                     }
-                                 }}><button>Show Winners</button> </Link>  
-                                <button style={{margin:'20px'}} onClick={()=>{
-                                    this.sendNotification(pool._id);
-                                }}>Send Notification</button>
+                                 
 
                                 
+                            </div>
                             </div>
                         })}
                     </div>

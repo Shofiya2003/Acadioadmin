@@ -5,6 +5,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import PostIndi from "../PostIndi";
 import status from '../status';
 import {Button, Modal, Alert, Spinner, ProgressBar} from 'react-bootstrap';
+import Nav from "../../nav"
 
 class PoolPage extends Component{
 
@@ -317,36 +318,69 @@ class PoolPage extends Component{
                      
                     <Card.Body>
                         
-                    <div class="col-12 col-lg-5 mt-2 no-padding">
+                    
+                       
+                
+                <Nav/>
+                
+                {/* <img height="30" width="30" scr={(this.props.location.obj.pool.coverPic===null || this.props.location.obj.pool.coverPic===undefined || this.props.location.obj.pool.coverPic==="") ? status.s3_url + this.props.location.obj.pool.coverPic : status.s3_url + "images/profile_bg.jpeg"} alt="cover pic"/>                   */}
+                <div className="section no-padding">
+                    <div className="container-fluid no-padding bg-grey-lighter">
+                        <div className="row align-items-center no-margin">
+                            <div className="col-12 col-lg-5 mt-2 no-padding">
+                            
                             <img
                                 style={{width : "100%", height : "auto"}}
                                 class="card-img-top card_img bg-white shadow rounded overflow-hidden"
                                 alt=""
                                 src={(this.props.location.obj.pool.cover_pic===null || this.props.location.obj.pool.cover_pic===undefined || this.props.location.obj.pool.cover_pic==="") ? status.s3_url + "images/profile_bg.jpeg" : `${status.s3_url + this.props.location.obj.pool.cover_pic}?${this.state.imageHash}`}
                             />
+                   
+                            </div>
+
+                            <div className="col-12 col-lg-6 mt-3 no-margin no-padding text-center">
+                                <div className="padding-50">
+                                    <div className="bg-white shadow rounded overflow-hidden pb-3">
+                                        <h4 className="font-weight-normal text-color cname">{this.props.location.obj.pool.pool_name}</h4>
+                                        <br/>
+                                        <br/>
+                                        <div className="drop-shadow2 card-zoom ml-4 mr-4 pb-2 pt-2">
+                                        <h5 className="card-title text-dark">
+                                            <span className="ml-2 post_name"></span>
+                                            <img src={this.state.profile_pic} style={{height:"30px", float:"left" ,marginRight:"20px"}}/>
+                                        </h5>
+                                        </div>
+                                        <div className="font-weight-light mt-4 mr-2 desc desc-wrap">
+                                        <p>End-Date: {this.props.location.obj.pool.end_date}</p>
+                                        <p>Fees: {this.props.location.obj.pool.fees}</p>
+                                        <p>Curr: {this.props.location.obj.pool.curr}</p>
+                                        <p>Prize-Pool:{this.props.location.obj.pool.prize_pool}</p>
+                                        <p>Slots:{this.props.location.obj.pool.total_slots}</p>
+                                        <p>Max Entries:{this.props.location.obj.pool.max_entries}</p>
+                                        <p>No of Winners:{this.props.location.obj.pool.no_of_winners}</p>
+                                        <p>Win Percent:{this.props.location.obj.pool.win_percent}</p>
+                                        <p>Rules:{this.props.location.obj.pool.rules}</p>
+                                        <p>Slots Filled:{this.props.location.obj.pool.slots_filled}</p>
+                                        <p>End:{this.props.location.obj.pool.end}</p>
+                                        <p>Talent: {this.props.location.obj.pool.talent}</p>
+                                        <p>Your Entries:{this.props.location.obj.pool.your_entries}</p>
+                                        </div>
+                                        <hr/>
+                                        <Button onClick={this.handleCoverShow}>Edit Cover Pic</Button>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                       
-                    <p>Pool Name: {this.props.location.obj.pool.pool_name}</p>
-                  
-                {/* <img height="30" width="30" scr={(this.props.location.obj.pool.coverPic===null || this.props.location.obj.pool.coverPic===undefined || this.props.location.obj.pool.coverPic==="") ? status.s3_url + this.props.location.obj.pool.coverPic : status.s3_url + "images/profile_bg.jpeg"} alt="cover pic"/>                   */}
-
-                <p>Talent: {this.props.location.obj.pool.talent}</p>
-                <p>End-Date: {this.props.location.obj.pool.end_date}</p>
-                <p>Fees: {this.props.location.obj.pool.fees}</p>
-                <p>Curr: {this.props.location.obj.pool.curr}</p>
-                <p>Prize-Pool:{this.props.location.obj.pool.prize_pool}</p>
-                <p>Slots:{this.props.location.obj.pool.total_slots}</p>
-                <p>Max Entries:{this.props.location.obj.pool.max_entries}</p>
-                <p>No of Winners:{this.props.location.obj.pool.no_of_winners}</p>
-                <p>Win Percent:{this.props.location.obj.pool.win_percent}</p>
-                <p>Rules:{this.props.location.obj.pool.rules}</p>
-                <p>Slots Filled:{this.props.location.obj.pool.slots_filled}</p>
-                <p>End:{this.props.location.obj.pool.end}</p>
-                <p>--v:{this.props.location.obj.pool.__v}</p>
-                <p>Your Entries:{this.props.location.obj.pool.your_entries}</p>
+                </div>
+               
+                
+              
+               
 
 
-                <Button onClick={this.handleCoverShow}>Edit Cover Pic</Button>
+               
 
 
                 <table>
@@ -407,27 +441,31 @@ class PoolPage extends Component{
                         </td>
                         
                     </table>
-                    <button onClick={this.addPosition} className="add_button">Add</button>
-                    <button className="add_button" onClick={this.removePosition} disabled={this.state.currentPos===1}>Remove</button>
+                    <Button onClick={this.addPosition} variant="primary" style={{marginRight:"15px",marginLeft:"15px"}}>Add</Button>
+                    <Button variant="outline-danger" onClick={this.removePosition} disabled={this.state.currentPos===1}>Remove</Button>
                 </div>
 
-                <button onClick={this.submit} type="button" style={{margin:"50px"}}>Submit</button>
-                    <h1>Posts</h1>
-
+                <Button onClick={this.submit} variant="outline-primary" size="lg" type="button" style={{margin:"50px"}}>Submit</Button>
+                
+                <div className="row ml-3 mr-3">
+                         
                     <InfiniteScroll
                         dataLength={this.state.posts.length}
                         next={this.fetch}
                         hasMore={this.state.hasMore}
                         loader={<h4>Loading...</h4>}
                     >
-                         <div className="row ml-3 mr-3">
+                         
                             
                             {this.state.posts.map((post,index)=>{
                         
                             const key=post._id.concat(this.state.position[this.state.currentPos-1]===post._id).concat(this.state.selected[this.state.currentPos-2]===post._id);
 
-                            return <PostIndi key={key} post={post} onTick={this.onTick} s={this.state.position} selected={this.state.position[this.state.currentPos-1]===post._id} disabled={this.state.selected}></PostIndi>
-                               
+                            return <div className="col-sm-6 col-lg-4 mt-3 mb-3">
+                            <div className='card bg-white shadow rounded overflow-hidden'>
+                            <PostIndi key={key} post={post} onTick={this.onTick} s={this.state.position} selected={this.state.position[this.state.currentPos-1]===post._id} disabled={this.state.selected}></PostIndi>
+                            </div>
+                            </div>   
                                
                                 
                         })}
@@ -435,10 +473,10 @@ class PoolPage extends Component{
 
                         
 
-                    </div>
+                
                     
                     </InfiniteScroll>
-
+                </div>
             </>
         )
     }

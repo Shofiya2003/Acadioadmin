@@ -3,6 +3,8 @@ import axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component";
 import WinnerComponent from "./WinnerComponent";
 import status from '../status';
+import Nav from "../../nav"
+import {Button} from "react-bootstrap";
 
 
 class ChallengeWinnerPage extends Component{
@@ -71,7 +73,9 @@ class ChallengeWinnerPage extends Component{
 
     render(){
         return <div>
-            <h1>CHALLENGE WINNERS</h1>
+            <Nav/>
+            <h1 className="mt-3 text-center text-color pagehead">Challenge Winners</h1>
+            <hr/>
             <div>
                 <InfiniteScroll
                     dataLength={this.state.winners.length}
@@ -79,13 +83,15 @@ class ChallengeWinnerPage extends Component{
                     hasMore={this.state.hasMore}
                     loader={<h4>Loading...</h4>}
                 >
-
-                    <div style={{display:"flex", justifyContent:"space-between",flexWrap:"wrap"}}>
+                    <div className="row ml-3 mr-3">
+                    
 
                
                         {this.state.winners.map(challenge=>{
                            
-                            return <div style={{border:"1px solid black", fontSize:"16px", margin:"10px",flexBasis:"60%",paddingLeft:"10px"}}>
+                            return <div className="col-sm-6 col-lg-4 mt-3 mb-3">
+                            <div className='card bg-white shadow rounded overflow-hidden' style={{paddingLeft:"17px",paddingRight:"17px",paddingTop:"15px"}}>
+                            {/* <div style={{border:"1px solid black", fontSize:"16px", margin:"10px",flexBasis:"60%",paddingLeft:"10px"}}> */}
                                 <h2>Challenge Name: {challenge["ch_name"]}</h2>
                                 <p>Date: {challenge["date"]}</p>
                                 <p>Talent: {challenge["talent"]}</p>
@@ -112,11 +118,12 @@ class ChallengeWinnerPage extends Component{
 
                         
                                 
-                                <button style={{margin:'20px'}} onClick={()=>{
+                                <Button style={{margin:'20px'}} onClick={()=>{
                                     this.sendNotification(challenge._id);
-                                }}>Send Notification</button>
+                                }}>Send Notification</Button>
 
                                
+                            </div>
                             </div>
                         })}
                     </div>
