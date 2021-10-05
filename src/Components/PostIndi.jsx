@@ -2,7 +2,7 @@ import React,{Component} from "react";
 import ReactPlayer from "react-player";
 import {Card} from "react-bootstrap";
 import "../styles.css"
-
+import Comment from '../Components/Challenges/Comment';
 
 import ReadMoreAndLess from 'react-read-more-less';
 
@@ -123,7 +123,7 @@ componentWillMount(){
 
             </div>
         
-                
+            <Comment id={this.props.post._id}/>
            
             </div>
            

@@ -34,6 +34,7 @@ class Home extends Component{
             rules:this.state.rules
         }).then(res=>{
             alert(res.data.message);
+            console.log(res);
             this.setState({
                 modalIsOpen:false
             })
@@ -62,6 +63,8 @@ class Home extends Component{
             a.click();
             });
             
+        }).catch(err=>{
+            console.log(err);
         })
     }
 

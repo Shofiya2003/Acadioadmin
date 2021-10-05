@@ -8,6 +8,7 @@ import ReadMoreAndLess from 'react-read-more-less';
 import {Button} from "react-bootstrap";
 import status  from "../status";
 import axios from "axios";
+import Comment from './Comment';
 
 class PostIndi extends Component{
     constructor(){
@@ -211,6 +212,7 @@ handleCoverClose(){
                 
            
             </div>
+            <Comment props={this.props.post._id}/>
             <Button variant="danger" onClick={(event)=>{
                 this.toDelete(event,this.props.post._id,this.props.post.uid);
             }}>Delete</Button>

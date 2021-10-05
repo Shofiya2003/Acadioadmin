@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-constructor */
 import React,{Component} from "react";
 import {Card,Button} from "react-bootstrap";
 
@@ -6,6 +7,9 @@ import "../../styles.css"
 
 
 class ChallengeBox extends Component{
+   
+
+   
         render(){
             return(
 
@@ -44,6 +48,7 @@ class ChallengeBox extends Component{
                 <Card.Text>date:{this.props.obj["date"]}</Card.Text>
                 <Card.Text>__v:{this.props.obj["__v"]}</Card.Text>
                 <Card.Text>Taken Part:{this.props.obj["taken_part"]}</Card.Text>
+                
               <Link to={{
                   pathname:"/challengeInfo",
                   obj:{
