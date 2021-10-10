@@ -32,12 +32,19 @@ class Comment extends Component{
             return;
         }
         axios.patch(status.baseUrl+'/challengePost/addComment',{
+            declarer_id:localStorage.getItem("id"),
             id:this.state.current_id,
             comment:this.state.comment
-        }).then(response=>{
+        },
+        {
+            headers: {
+              'Authorization': localStorage.getItem("token")
+            }
+          }).then(response=>{
             alert(response.data.message);
         }).catch(err=>{
             alert(err);
+            console.log(err.response.data.message)
         })
     }
     render(){
