@@ -41,7 +41,7 @@ componentWillMount(){
         })
     }
 
-    
+    console.log("id"+this.props.post._id);
 
 }
 
@@ -145,7 +145,7 @@ handleCoverClose(){
                 <div>
                     <div>
                         <h5 class="card-title">
-                            <img className="profilePic" src={this.state.profile_pic}/>
+                            <img className="profilePic" src={this.state.profile_pic} alt="profile_pic"/>
                             <span className="name">{this.props.post.name}</span>
                         </h5>
                     </div>
@@ -212,7 +212,7 @@ handleCoverClose(){
                 
            
             </div>
-            <Comment props={this.props.post._id}/>
+            <Comment id={this.props.post._id}/>
             <Button variant="danger" onClick={(event)=>{
                 this.toDelete(event,this.props.post._id,this.props.post.uid);
             }}>Delete</Button>

@@ -63,7 +63,7 @@ class Display extends Component{
         return(
             <div>
                 <Nav/>
-                <h1 className="mt-3 text-center text-color pagehead">Home</h1>
+                <h1 className="mt-3 text-center text-color pagehead">Posts</h1>
                 <hr/>
                 <InfiniteScroll
                     dataLength={this.state.entries.length}
