@@ -32,12 +32,15 @@ class Comment extends Component{
             alert('Write Comment');
             return;
         }
-        // status.baseUrl+'/poolPost/addComment'
-        axios.patch("http://localhost:3001/poolPost/addComment",{
+        
+        axios.patch(status.baseUrl+'/poolPost/addComment',{
             id:this.props.id,
             comment:this.state.comment
         }).then(response=>{
-            alert(response.data.message);
+            this.props.getComment(this.state.comment);
+            this.setState({
+                comment:""
+            })
         }).catch(err=>{
             console.log(err.response);
         })
@@ -47,7 +50,7 @@ class Comment extends Component{
             <>
                 <div className="flex-justify-center">
                     <input placeholder="Comment" onChange={this.recordComment}></input>
-                    <Button variant="outline-primary" size="sm" onClick={this.comment}>Comment</Button>
+                    <Button variant="outline-primary" size="sm" onClick={this.comment} value={this.state.comment}>Comment</Button>
                 </div>
             </>
         )

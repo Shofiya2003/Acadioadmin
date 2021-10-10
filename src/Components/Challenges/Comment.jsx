@@ -31,20 +31,26 @@ class Comment extends Component{
             alert('Write Comment');
             return;
         }
+      
         axios.patch(status.baseUrl+'/challengePost/addComment',{
             id:this.state.current_id,
             comment:this.state.comment
         }).then(response=>{
-            alert(response.data.message);
+          
+            this.props.getComment(this.state.comment);
+            this.setState({
+                comment:""
+            })
+            
         }).catch(err=>{
-            alert(err);
+            console.log(err);
         })
     }
     render(){
         return(
             <>
                 <div className="flex-justify-center">
-                    <input placeholder="Comment" onChange={this.recordComment}></input>
+                    <input placeholder="Comment" onChange={this.recordComment} value={this.state.comment}></input>
                     <Button variant="outline-primary" size="sm" onClick={this.comment}>Comment</Button>
                 </div>
             </>
