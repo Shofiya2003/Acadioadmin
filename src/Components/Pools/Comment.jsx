@@ -26,18 +26,20 @@ class Comment extends Component{
 
     comment(){
         
-        console.log(this.state.current_id)
+        console.log(this.props.id);
+        console.log(this.state.comment);
         if(this.state.comment===''){
             alert('Write Comment');
             return;
         }
-        axios.patch(status.baseUrl+'/poolPost/addComment',{
-            id:this.state.current_id,
+        // status.baseUrl+'/poolPost/addComment'
+        axios.patch("http://localhost:3001/poolPost/addComment",{
+            id:this.props.id,
             comment:this.state.comment
         }).then(response=>{
             alert(response.data.message);
         }).catch(err=>{
-            alert(err);
+            console.log(err.response);
         })
     }
     render(){

@@ -26,7 +26,7 @@ class Comment extends Component{
 
     comment(){
         
-        console.log(this.state.current_id)
+        console.log(this.state.current_id);
         if(this.state.comment===''){
             alert('Write Comment');
             return;

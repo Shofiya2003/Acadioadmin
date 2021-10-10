@@ -2,6 +2,11 @@ import React, { Component } from "react";
 import {Button,Navbar,NavLink} from 'react-bootstrap';
 
 class Nav extends Component{
+    toLogout(){
+        localStorage.clear();
+        window.location.assign("/");
+    }
+
     render(){
         return(
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
