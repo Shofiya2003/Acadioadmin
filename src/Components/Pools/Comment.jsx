@@ -5,15 +5,16 @@ import {Button} from 'react-bootstrap';
 import status from '../status'
 class Comment extends Component{
     // eslint-disable-next-line no-useless-constructor
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
        
         this.state={
-            comment:"",
+            comment:this.props.comment,
             current_id:""
         }
         this.recordComment=this.recordComment.bind(this);
         this.comment =this.comment.bind(this);
+        console.log(this.props.comment);
     }
    
     recordComment(event){
@@ -33,10 +34,16 @@ class Comment extends Component{
             return;
         }
         // status.baseUrl+'/poolPost/addComment'
-        axios.patch("http://localhost:3001/poolPost/addComment",{
+        axios.patch(status.baseUrl+'/poolPost/addComment',{
+            declarer_id:localStorage.getItem("id"),
             id:this.props.id,
             comment:this.state.comment
-        }).then(response=>{
+        },
+        {
+            headers: {
+              'Authorization': localStorage.getItem("token")
+            }
+          }).then(response=>{
             alert(response.data.message);
         }).catch(err=>{
             console.log(err.response);
@@ -46,7 +53,7 @@ class Comment extends Component{
         return(
             <>
                 <div className="flex-justify-center">
-                    <input placeholder="Comment" onChange={this.recordComment}></input>
+                    <textarea placeholder="Comment" style={{height:"100px"}} onChange={this.recordComment} value={this.state.comment}></textarea>
                     <Button variant="outline-primary" size="sm" onClick={this.comment}>Comment</Button>
                 </div>
             </>

@@ -2,7 +2,7 @@ import React,{Component} from "react";
 import Modal from "react-modal";
 import axios from "axios";
 import "../../styles.css"
-
+import status from '../status';
 
 class Pool extends Component{
   
@@ -23,6 +23,7 @@ class Pool extends Component{
       
      count:1,
      winningNumber:0,
+     rank: "",
      winnings:{},
      details:{oid:localStorage.getItem("id")},
      modalIsOpen:false,
@@ -39,7 +40,12 @@ class Pool extends Component{
   componentDidUpdate() {
     if(this.isCalled){
       if(this.state.details.hasOwnProperty("winnings")){
-        axios.post("https://contest-test-2.herokuapp.com/pool/create",this.state.details).then(response=>{
+        axios.post(status.baseUrl+"/pool/create",this.state.details,
+        {
+          headers: {
+            'Authorization': localStorage.getItem("token")
+          }
+        }).then(response=>{
           this.isCalled=false;
           this.setState((prevState)=>({
             ...prevState,
@@ -109,9 +115,10 @@ class Pool extends Component{
 //Handle change on winnings input
   handleChange(event){
     const newValue=event.target.value;
+    const id=event.target.id;
     this.setState(prevState=>({
          ...prevState,
-         winningNumber:newValue
+         [id]:newValue
     }))
 
     
@@ -120,10 +127,16 @@ class Pool extends Component{
 
   //Click on Add button
   handleClick(){
+    console.log(this.state.winnings);
+    if(this.state.winningNumber==="" || this.state.rank==="")
+    {
+      alert("Enter proper values");
+      return;
+    }
     this.setState(prevState=>({
       ...prevState,
       count:this.state.count+1,
-      winnings:{...this.state.winnings,[this.state.count]:this.state.winningNumber}
+      winnings:{...this.state.winnings,[this.state.rank]:this.state.winningNumber}
     }))
 
   }
@@ -184,14 +197,15 @@ class Pool extends Component{
           }))
 
         })}>
-        <input onChange={this.handleChangeAll} id="oid" type="text" placeholder="OID" value="60f95c29e118ea0004a50b96" /><br />
+        {/* <input onChange={this.handleChangeAll} id="oid" type="text" placeholder="OID" value="60f95c29e118ea0004a50b96" /><br /> */}
         <input onChange={this.handleChangeAll} id="pool_name" type="text" placeholder="pool-name" required /><br />
         <select onChange={this.handleChangeAll} id="talent">
-        <option disabled selected value> -- select talent-- </option>
-          <option id="talent" value="Dance">Dance</option>
+        <option disabled selected value> Select Talent </option>
+          <option id="talent" value="Photography">Photography</option>
           <option id="talent" value="Writing">Writing</option>
-          <option id="talent" value="Singing">Singing</option>
           <option id="talent" value="Art">Art</option>
+          <option id="talent" value="Singing">Singing</option>
+          <option id="talent" value="Dance">Dance</option>
         </select><br />
        
         <input onChange={this.handleChangeAll} id="end_dt" type="date" placeholder="End-Date" /><br />
@@ -202,7 +216,8 @@ class Pool extends Component{
         <input onChange={this.handleChangeAll} id="max_entries" type="number" placeholder="Max-Entries" /><br />
         <input onChange={this.handleChangeAll} id="no_of_winners" type="number" placeholder="No. of Winners" /><br />
         <input onChange={this.handleChangeAll} id="win_percent" type="number" placeholder="Win Percent" /><br />
-        <input id="winnings" type="number" onChange={this.handleChange} placeholder="Enter Winnings" />
+        <input id="rank" type="text" onChange={this.handleChange} placeholder="Enter Rank" />
+        <input id="winningNumber" type="number" onChange={this.handleChange} placeholder="Enter Prize" />
         <button type="button" onClick={this.handleClick}>Add</button><br />
         <textarea id="rules" onChange={this.handleChangeAll} placeholder="Rules"/><br />
         <button type="submit" className="submit" disabled={this.state.disabled}>Submit</button>

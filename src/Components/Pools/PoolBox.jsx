@@ -19,7 +19,8 @@ class PoolBox extends Component{
             talent:this.props.talent,
             end_date:this.props.endDate,
             fees:this.props.fees,
-            talents:["Art","Dance","Writing","Singing"]
+            talents:["Photography","Art","Dance","Writing","Singing"],
+            end: this.props.obj.end
         }
 
         this.modalStyle={
@@ -52,19 +53,29 @@ class PoolBox extends Component{
     }
 
     edit(){
+        console.log(this.state.pool_name);
+        console.log(this.state.talent);
+        console.log(this.state.end_date);
+        console.log(this.state.fees);
         if(!this.state.pool_name || !this.state.talent || !this.state.end_date || !this.state.fees){
             alert("Fill all the details");
             return;
         }
         console.log(this.state.talent);
         axios.patch(status.baseUrl+"/pool/editDetails",{
+            declarer_id:localStorage.getItem("id"),
             _id:this.props.obj._id,
             pool_name:this.state.pool_name,
             talent:this.state.talent,
             end_date:this.state.end_date.toString(),
             fees:this.state.fees.toString()
-        }).then(response=>{
-            alert(response.data.message);
+        },
+        {
+            headers: {
+              'Authorization': localStorage.getItem("token")
+            }
+          }).then(response=>{
+            // console.log(response.data);
             if(response.data.message==="Successfully updated"){
                 this.setState({
                     modalIsOpen:false
@@ -80,9 +91,16 @@ class PoolBox extends Component{
 
     update(){
         axios.post(status.baseUrl+"/poolwinner/editDeadline",{
+            declarer_id:localStorage.getItem("id"),
             pool_id:this.props.obj._id
-        }).then(response=>{
-            alert(response.data.message);
+        },
+        {
+            headers: {
+              'Authorization': localStorage.getItem("token")
+            }
+          }).then(response=>{
+            // alert(response.data.message);
+            window.location.assign("/displayPools");
         }).catch(err=>{
             alert(err);
         })
@@ -106,7 +124,7 @@ class PoolBox extends Component{
                                         
             
                 <p>Talent: {this.state.talent}</p>
-                <p>END: {this.props.obj.end}</p>
+                <p>END: {this.state.end}</p>
 
                 {/* <p>End-Date: {this.state.end_date}</p>
                 <p>Fees: {this.state.fees}</p>
@@ -151,7 +169,7 @@ class PoolBox extends Component{
                   }
               }}>
               <Button variant="primary">Know More</Button></Link>
-              <Button variant="primary" onClick={this.update} style={{marginLeft:"20px", marginRight:"20px"}}>Update</Button>
+              <Button variant="primary" onClick={this.update} style={{marginLeft:"20px", marginRight:"20px"}}>Update End</Button>
               <Button variant="primary" onClick={this.openModal}>Edit Details</Button>     
 
              

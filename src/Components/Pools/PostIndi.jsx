@@ -11,8 +11,8 @@ import axios from "axios";
 import Comment from './Comment';
 
 class PostIndi extends Component{
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
        this.handleChange=this.handleChange.bind(this);
        this.handleCoverClose=this.handleCoverClose.bind(this);
         this.state={
@@ -24,8 +24,8 @@ class PostIndi extends Component{
             showErrorMessage:false,
         }
 
-       
-    }
+       console.log(this.props.post);
+    }   
 
 
 
@@ -41,7 +41,7 @@ componentWillMount(){
         })
     }
 
-    console.log("id"+this.props.post._id);
+    console.log("id"+this.props.post);
 
 }
 
@@ -111,13 +111,6 @@ handleCoverClose(){
     render(){
         
         return(
-
-
-            
-
-
-
-
             <Card className="card-body pt-2 pl-2 pb-0 bg-light">
                 <Modal isOpen={this.state.deleteModalIsOpen} aria-labelledby="contained-modal-title-vcenter" centered>
                     
@@ -155,7 +148,7 @@ handleCoverClose(){
                     <img
                     
                     class="card-img-top card_img"
-                    src={this.props.post.path}
+                    src={status.s3_url+this.props.post.path}
                     alt=""
                 />
                     :
@@ -169,7 +162,7 @@ handleCoverClose(){
                    <ReactPlayer
                     className="videoPlayer"
                     controls
-                    url={this.props.post.path}
+                    url={status.s3_url+this.props.post.path}
                    ></ReactPlayer>
                     :
 
@@ -212,7 +205,7 @@ handleCoverClose(){
                 
            
             </div>
-            <Comment id={this.props.post._id}/>
+            <Comment id={this.props.post._id} comment={this.props.post.comment}/>
             <Button variant="danger" onClick={(event)=>{
                 this.toDelete(event,this.props.post._id,this.props.post.uid);
             }}>Delete</Button>

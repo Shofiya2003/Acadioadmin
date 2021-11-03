@@ -45,10 +45,22 @@ class ChallengePage extends Component{
 
 
     onTick(event){
+        var obj = {"pid":event.target.value};
        if(event.target.id==="1"){
            this.setState({
                winner1:event.target.value
            })
+
+           if(this.state.posts[0]["_id"].toString() === event.target.value.toString())
+           {
+                obj["uid"] = this.state.posts[0]["uid"];
+           }
+           else
+           {
+                obj["uid"] = this.state.posts[1]["uid"];
+           }
+
+        //    console.log("POSTS : "+ JSON.stringify(this.state.posts));
        }
        else if(event.target.id==="2"){
            this.setState({
@@ -57,10 +69,10 @@ class ChallengePage extends Component{
        }
        this.setState({
            
-        winners:{...this.state.winners,[(event.target.id).toString()]:event.target.value}
+        winners:{...this.state.winners,[(event.target.id).toString()]:obj}
     })
        
-        
+        console.log(this.state.winners);
     }
 
     toSubmitWinners(){
@@ -82,16 +94,20 @@ class ChallengePage extends Component{
             "ch_id":this.props.location.obj.challenge._id,
             "winners":this.state.winners
 
-        }).then(res=>{
+        }, {
+            headers: {
+              'Authorization': localStorage.getItem("token")
+            }
+          }).then(res=>{
 
             window.location.assign("/home");
         }).catch(err=>{
-            console.log(err.response.data.message);
+            // console.log(err.response.data.message);
             alert(err.response.data.message)
         })
-        console.log(this.state.winners);
-        console.log("ch_oid: "+this.props.location.obj.challenge.ch_oid);
-        console.log("uid:" + localStorage.getItem("id"));
+        // console.log(this.state.winners);
+        // console.log("ch_oid: "+this.props.location.obj.challenge.ch_oid);
+        // console.log("uid:" + localStorage.getItem("id"));
 
 
         
@@ -126,7 +142,7 @@ class ChallengePage extends Component{
                             
                             return <tr>
                             <td>{key}</td>
-                            <td>{this.props.location.obj.challenge["prize"].key}</td>
+                            <td>{this.props.location.obj.challenge["prize"][key]}</td>
                         </tr>
                         })}
                     </table>

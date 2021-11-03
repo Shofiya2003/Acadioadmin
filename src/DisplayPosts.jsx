@@ -4,6 +4,7 @@ import PostBox from "./PostBox";
 import "./styles.css"
 import axios from "axios"
 import Nav from "./nav";
+import status from './Components/status';
 
 class Display extends Component{
     constructor(){
@@ -33,7 +34,7 @@ class Display extends Component{
     fetch(){
        var that=this;
 
-        axios.post("http://contest-test-2.herokuapp.com/contest/getAllMainMid",
+        axios.post(status.baseUrl+"/contest/getAllMainMid",
         {
             "uid":"6013bdbe824c8263693f8111",
             "mid":this.state.mid

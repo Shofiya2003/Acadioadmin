@@ -2,8 +2,10 @@ import axios from "axios";
 import React,{Component} from "react";
 import PoolBox from "../Pools/PoolBox";
 import InfiniteScroll from "react-infinite-scroll-component";
-import "../../styles.css"
-import Nav from "../../nav"
+import "../../styles.css";
+import Nav from "../../nav";
+import status from '../status';
+
 class DisplayPool extends Component{
     constructor(){
 
@@ -33,7 +35,7 @@ class DisplayPool extends Component{
 
     fetch(){
         console.log("mid"+this.state.mid);
-        axios.post("http://contest-test-2.herokuapp.com/pool/getAllMid_filter",{
+        axios.post(status.baseUrl+"/pool/getAllMid_filter",{
             "talent":"",
             "mid":this.state.mid,
             "uid":"6080867f28ee66187a2d4cc5"

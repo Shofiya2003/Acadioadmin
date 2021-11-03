@@ -5,7 +5,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import PostIndi from "../Pools/PostIndi";
 import status from '../status';
 import {Button, Modal, Alert, Spinner, ProgressBar} from 'react-bootstrap';
-import Nav from "../../nav"
+import Nav from "../../nav";
 
 class PoolPage extends Component{
 
@@ -156,7 +156,7 @@ class PoolPage extends Component{
 
     fetch(){
         
-        axios.post("http://contest-test-2.herokuapp.com/poolPost/getAllPost_ofPool",{
+        axios.post(status.baseUrl+"/poolPost/getAllPost_ofPool",{
         
             "pool_id":this.props.location.obj.pool._id,
             "uid":localStorage.getItem("id"), 
@@ -255,11 +255,17 @@ class PoolPage extends Component{
             return;
         }
 
-        axios.post("http://contest-test-2.herokuapp.com/poolwinner/create",{
+        axios.post(status.baseUrl+"/poolwinner/create",{
+            declarer_id:localStorage.getItem("id"),
             pool_id:this.props.location.obj.pool._id,
             oid:localStorage.getItem("id"),
             winners:this.state.winners
-        }).then(res=>{
+        },
+        {
+            headers: {
+              'Authorization': localStorage.getItem("token")
+            }
+          }).then(res=>{
             window.location.assign("/home");
         }).catch(err=>{
             alert(err.response.data.message)
@@ -271,7 +277,7 @@ class PoolPage extends Component{
             winners:this.state.winners
         }
         
-        console.log(obj);
+        // console.log(obj);
     }
 
 
@@ -423,7 +429,7 @@ class PoolPage extends Component{
                                                 <img style={{height:"100px"}} src={post.profile_pic===null || post.profile_pic==="" || post.profile_pic===undefined ? 
                                                 "https://zsquare-contest.s3.ap-south-1.amazonaws.com/images/profile_pic2.png"
                                                 :
-                                                post.profile_pic
+                                                status.s3_url + post.profile_pic
                                             }
                                                 
                                                 alt="_pic"></img>

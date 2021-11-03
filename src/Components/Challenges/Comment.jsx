@@ -5,11 +5,11 @@ import {Button} from 'react-bootstrap';
 import status from '../status'
 class Comment extends Component{
     // eslint-disable-next-line no-useless-constructor
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
        
         this.state={
-            comment:"",
+            comment:this.props.comment,
             current_id:""
         }
         this.recordComment=this.recordComment.bind(this);
@@ -26,7 +26,9 @@ class Comment extends Component{
 
     comment(){
         
+        console.log(localStorage.getItem("id"));
         console.log(this.state.current_id);
+        console.log(localStorage.getItem("token"));
         if(this.state.comment===''){
             alert('Write Comment');
             return;
@@ -51,7 +53,7 @@ class Comment extends Component{
         return(
             <>
                 <div className="flex-justify-center">
-                    <input placeholder="Comment" onChange={this.recordComment}></input>
+                    <textarea placeholder="Comment" style={{height: "100px"}} value={this.state.comment} onChange={this.recordComment}></textarea>
                     <Button variant="outline-primary" size="sm" onClick={this.comment}>Comment</Button>
                 </div>
             </>

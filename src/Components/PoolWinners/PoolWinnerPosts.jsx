@@ -104,10 +104,15 @@ class PoolWinnerPosts extends Component{
        
 
         axios.post(status.baseUrl+"/poolwinner/payPoolWinners",{
+            declarer_id:localStorage.getItem("id"),
             pool_id:this.props.location.obj._id,
             winners:this.state.prize,
-            secret:"Pay@Acadio@Pool"
-        }).then(res=>{
+            secret:"Pay@Acadio@Pool",
+        }, {
+            headers: {
+              'Authorization': localStorage.getItem("token")
+            }
+          }).then(res=>{
             alert(res.data.message);
         }).catch(error=>{
             alert(error.response.data.message);

@@ -13,10 +13,12 @@ class Home extends Component{
         super();
         this.edit=this.edit.bind(this);
         this.handleChange=this.handleChange.bind(this);
+        this.handleChangeHindi = this.handleChangeHindi.bind(this);
         this.state={
             modalIsOpen:false,
             talent:"",
             rules:"",
+            rulesHindi: ""
         }
     }
 
@@ -29,9 +31,11 @@ class Home extends Component{
             alert("Select Talent");
             return;
         }
-        axios.patch(status.baseUrl+'/rules/editRules',{
+        console.log("RULES HINDI : "+this.state.rulesHindi);
+        axios.post(status.baseUrl+'/rules/create',{
             talent:this.state.talent,
-            rules:this.state.rules
+            rules:this.state.rules,
+            rulesHindi: this.state.rulesHindi
         }).then(res=>{
             alert(res.data.message);
             console.log(res);
@@ -46,6 +50,12 @@ class Home extends Component{
     }
 
     handleChange(event){
+        this.setState({
+            [event.target.id]:event.target.value,
+        })
+    }
+
+    handleChangeHindi(event){
         this.setState({
             [event.target.id]:event.target.value,
         })
@@ -137,10 +147,17 @@ class Home extends Component{
                     <option>Dance</option>
                     <option>Singing</option>
                     <option>Art</option>
+                    <option>Photography</option>
+                    <option>Writing</option>
+                    <option>Speaking</option>
+                    <option>Acting</option>
+                    <option>Standup Comedy</option>
                   </select><br/>
-                  <label for="rules"/>Rules<br/>
-                  <textarea id="rules" onChange={this.handleChange} placeholder="Enter Rules" style={{width:'414px',height:'159px'}}/>
+                  <label for="rules"/>English Rules<br/>
+                  <textarea id="rules" onChange={this.handleChange} placeholder="Enter English Rules" style={{width:'414px',height:'159px'}}/>
                   
+                  <label for="rulesHindi"/>Hindi Rules<br/>
+                  <textarea id="rulesHindi" onChange={this.handleChangeHindi} placeholder="Enter Hindi Rules" style={{width:'414px',height:'159px'}}/>
                 </div>  
                 <Button variant="primary" onClick={this.edit}>Edit</Button>
               </Modal>

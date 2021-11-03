@@ -1,5 +1,6 @@
 import React,{Component} from "react";
 import axios from "axios";
+import status from './Components/status';
 
 class Login extends Component{
 
@@ -31,7 +32,7 @@ class Login extends Component{
 
     onLogin(event){
         event.preventDefault();
-        axios.post("https://contest-test-2.herokuapp.com/user/AdminLogin",
+        axios.post(status.baseUrl+"/user/AdminLogin",
             this.state.loginDetails
         ).then(response=>{
             console.log(response);

@@ -10,16 +10,15 @@ import axios from "axios";
 import status from "./status";
 
 class PostIndi extends Component{
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
        
         this.state={
-            profile_pic:"",
-            
-            
+            profile_pic:"", 
         }
 
-       
+        console.log(this.props.post);
+
     }
 
 
@@ -51,14 +50,7 @@ componentWillMount(){
     render(){
         
         return(
-
-
-            
-
-
-
-
-            <Card className="card-body pt-2 pl-2 pb-0 bg-light">     
+            <Card className="col-sm-12 col-md-3 col-lg-3 card-body pt-2 pl-2 pb-0 bg-light">     
             <div>
                 <div>
                     <div>
@@ -73,7 +65,7 @@ componentWillMount(){
                     <img
                     
                     class="card-img-top card_img"
-                    src={this.props.post.path}
+                    src={status.s3_url+this.props.post.path}
                     alt=""
                 />
                     :
@@ -83,11 +75,11 @@ componentWillMount(){
                    
             }
 
-{this.props.post.post_type==='V' ?
+            {this.props.post.post_type==='V' ?
                    <ReactPlayer
                     className="videoPlayer"
                     controls
-                    url={this.props.post.path}
+                    url={status.s3_url+this.props.post.path}
                    ></ReactPlayer>
                     :
 
@@ -123,7 +115,7 @@ componentWillMount(){
 
             </div>
         
-            <Comment id={this.props.post._id}/>
+            <Comment id={this.props.post._id} comment={this.props.post.comment}/>
            
             </div>
            

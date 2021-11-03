@@ -8,9 +8,8 @@ import "../../styles.css"
 
 class ChallengeBox extends Component{
    
-
-   
         render(){
+            // console.log(this.props.obj["prize"]);
             return(
 
 
@@ -37,7 +36,7 @@ class ChallengeBox extends Component{
                         
                         return <tr>
                         <td>{key}</td>
-                        <td>{this.props.obj["prize"].key}</td>
+                        <td>{this.props.obj["prize"][key]}</td>
                     </tr>
                     })}
                 </table>
