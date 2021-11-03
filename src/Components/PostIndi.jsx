@@ -12,9 +12,11 @@ import status from "./status";
 class PostIndi extends Component{
     constructor(props){
         super(props);
-       
+        this.getComment=this.getComment.bind(this);
         this.state={
-            profile_pic:"", 
+            profile_pic:"",
+            comment:""
+            
         }
 
         console.log(this.props.post);
@@ -35,11 +37,20 @@ componentWillMount(){
         })
     }
 
-    
+    if(this.props.post.comment){
+        this.setState({
+            comment:this.props.post.comment
+        })
+    }
 
 }
 
 
+getComment(comment){
+    this.setState({
+        comment:comment
+    })
+}
         
     
 
@@ -109,13 +120,12 @@ componentWillMount(){
                 
                 }
 
-              
-
+              {this.props.comment!==""?<p>Comment:{this.state.comment}</p>:null}
 
 
             </div>
         
-            <Comment id={this.props.post._id} comment={this.props.post.comment}/>
+            <Comment id={this.props.post._id} getComment={this.getComment}/>
            
             </div>
            

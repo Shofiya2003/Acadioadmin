@@ -33,6 +33,7 @@ class Comment extends Component{
             alert('Write Comment');
             return;
         }
+      
         axios.patch(status.baseUrl+'/challengePost/addComment',{
             declarer_id:localStorage.getItem("id"),
             id:this.state.current_id,
@@ -44,6 +45,10 @@ class Comment extends Component{
             }
           }).then(response=>{
             alert(response.data.message);
+            this.props.getComment(this.state.comment);
+            this.setState({
+                comment:""
+            })
         }).catch(err=>{
             alert(err);
             console.log(err.response.data.message)

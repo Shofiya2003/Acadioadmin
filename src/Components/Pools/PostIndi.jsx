@@ -15,6 +15,7 @@ class PostIndi extends Component{
         super(props);
        this.handleChange=this.handleChange.bind(this);
        this.handleCoverClose=this.handleCoverClose.bind(this);
+       this.getComment=this.getComment.bind(this);
         this.state={
             profile_pic:"",
             deleteModalIsOpen:false,
@@ -22,6 +23,8 @@ class PostIndi extends Component{
             _idToBeDeleted:"",
             uidOfDeletedPost:"",
             showErrorMessage:false,
+
+            comment:""
         }
 
        console.log(this.props.post);
@@ -43,6 +46,18 @@ componentWillMount(){
 
     console.log("id"+this.props.post);
 
+    if(this.props.post.comment){
+        this.setState({
+            comment:this.props.post.comment
+        })
+    }
+
+}
+
+getComment(comment){
+    this.setState({
+        comment:comment
+    })
 }
 
 toDelete(event,id,uid){
@@ -198,14 +213,14 @@ handleCoverClose(){
                 }}></input>
 
 
-
+{this.props.comment!==""?<p>Comment:{this.state.comment}</p>:null}
 
             </div>
         
                 
            
             </div>
-            <Comment id={this.props.post._id} comment={this.props.post.comment}/>
+            <Comment id={this.props.post._id} getComment={this.getComment}/>
             <Button variant="danger" onClick={(event)=>{
                 this.toDelete(event,this.props.post._id,this.props.post.uid);
             }}>Delete</Button>

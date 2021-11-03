@@ -45,6 +45,10 @@ class Comment extends Component{
             }
           }).then(response=>{
             alert(response.data.message);
+            this.props.getComment(this.state.comment);
+            this.setState({
+                comment:""
+            })
         }).catch(err=>{
             console.log(err.response);
         })
@@ -54,7 +58,7 @@ class Comment extends Component{
             <>
                 <div className="flex-justify-center">
                     <textarea placeholder="Comment" style={{height:"100px"}} onChange={this.recordComment} value={this.state.comment}></textarea>
-                    <Button variant="outline-primary" size="sm" onClick={this.comment}>Comment</Button>
+                    <Button variant="outline-primary" size="sm" onClick={this.comment} >Comment</Button>
                 </div>
             </>
         )
