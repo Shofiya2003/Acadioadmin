@@ -388,25 +388,29 @@ class PoolPage extends Component{
 
 
                
+                {
+                    (this.props.location.obj.pool.winnings===undefined)
+                    ?
+                        null
+                    :
+                        <table>
+                        <th>WINNINGS TABLE</th>
+                        <tr>
+                            <td>Position</td>
+                            <td>Winnings</td>
+                            
+                            </tr>
+                            {Object.keys(this.props.location.obj.pool.winnings).map(key=>{
+                            
+                            return <tr>
+                            <td>{key}</td>
+                            <td>{this.props.location.obj.pool.winnings[key]}</td>
+                        </tr>
+                        })}
+                        </table>
+                }
 
 
-                <table>
-                <th>WINNINGS TABLE</th>
-                <tr>
-                    <td>Position</td>
-                    <td>Winnings</td>
-                    
-                    </tr>
-                    {Object.keys(this.props.location.obj.pool.winnings).map(key=>{
-                    
-                    return <tr>
-                    <td>{key}</td>
-                    <td>{this.props.location.obj.pool.winnings[key]}</td>
-                </tr>
-                })}
-                </table>
-
-                  
                  
                     </Card.Body>
     

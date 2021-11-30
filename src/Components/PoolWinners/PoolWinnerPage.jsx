@@ -102,9 +102,16 @@ class PoolWinnerPage extends Component{
                                 <p>Date: {pool["date"]}</p>
                                 <p>Talent: {pool["talent"]}</p>
                                 <p>Prize:</p>
-                                {Object.keys(pool["winnings"]).map(position=>{
-                                    return <li>{position}: {pool["winnings"][position]}</li>
-                                })}
+                                {
+                                    (pool["winnings"]===undefined)
+                                    ?
+                                        null
+                                    :
+                                        Object.keys(pool["winnings"]).map(position=>{
+                                            return <li>{position}: {pool["winnings"][position]}</li>
+                                        })
+                                }
+                                
 
                                 <p>Winners:</p>
                                 <div style={{display:"flex",flexWrap:"wrap",justifyContent:"center"}}>
