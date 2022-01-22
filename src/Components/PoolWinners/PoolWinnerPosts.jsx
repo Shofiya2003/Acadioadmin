@@ -10,6 +10,7 @@ class PoolWinnerPosts extends Component{
     constructor(){
         super();
         this.fetch=this.fetch.bind(this);
+        this.getParticipantsDetails = this.getParticipantsDetails.bind(this);
         this.addAmountToObject=this.addAmountToObject.bind(this);
         this.toPay=this.toPay.bind(this);
         this.state={
@@ -17,7 +18,8 @@ class PoolWinnerPosts extends Component{
             hasMore:true,
             winners:[],
             prize:{},
-            rankAmount:{}
+            rankAmount:{},
+            participants:[]
         }
     }
 
@@ -25,12 +27,39 @@ class PoolWinnerPosts extends Component{
     componentDidMount(){
         console.log("ENTER");
         this.fetch();
+        this.getParticipantsDetails();
         
     }
 
     componentDidUpdate(){
         console.log(this.state.prize)
     }
+
+    getParticipantsDetails(){
+        axios.post(status.baseUrl+"/poolpost/getAllParticipants_ofPool",{
+            "pool_id":this.props.location.obj._id,
+            "uid":localStorage.getItem('id')
+        }).then(response=>{
+            console.log(response.data.message);
+            if(response.data.message.length!==0){
+                this.setState({
+                    participants:[...this.state.participants,...response.data.message]
+                })
+            }else{
+                // this.setState({
+                //     hasMore:false
+                // })
+                console.log("FALSE");
+            }
+        }).catch(err=>{
+            // this.setState({
+            //     hasMore:false
+            // })
+            console.log(err);
+        })
+    }
+
+
     fetch(){
         axios.post(status.baseUrl+"/poolwinner/getWinnersPost_ofPool_byrank",{
             "pool_id":this.props.location.obj._id,
@@ -142,6 +171,22 @@ class PoolWinnerPosts extends Component{
                 </table>
 
                 <button onClick={this.toPay}>Pay</button>
+
+
+                <table>
+                    <tr>
+                        <td>Name</td>
+                        <td>Contact</td>
+                    </tr>
+
+                    {Object.keys(this.state.participants).map(key=>{
+                        return <tr>
+                            <td>{this.state.participants[key].name}</td>
+                            <td>{this.state.participants[key].mobile}</td>
+                        </tr>
+                })}
+                </table>
+
                 
                 <InfiniteScroll
                     dataLength={this.state.winners.length}
